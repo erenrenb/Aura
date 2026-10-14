@@ -1,0 +1,18 @@
+* text=auto
+
+# Unreal assets must remain binary.
+*.uasset binary
+*.umap binary
+*.ubulk binary
+*.uexp binary
+
+# Media and source art
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tga binary
+*.dds binary
+*.wav binary
+*.mp3 binary
+*.fbx binary
+*.blend binary
