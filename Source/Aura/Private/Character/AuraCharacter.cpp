@@ -6,6 +6,8 @@
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "State/Aura_PlayerState.h"
+#include "Input/AuraPlayerController.h"
+#include "HUD/AuraHUD.h"
 
 AAuraCharacter::AAuraCharacter()
 {
@@ -55,4 +57,13 @@ void AAuraCharacter::InitACInfo()
 	Aura_PlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(Aura_PlayerState,this);
 	AbilitySystemComponent=Aura_PlayerState->GetAbilitySystemComponent();
 	AttributeSet=Aura_PlayerState->GetAttributeSet();
+	
+	// ↓ 新增：初始化 HUD 并注入 WidgetController
+	if (AAuraPlayerController* AuraPC = Cast<AAuraPlayerController>(GetController()))
+	{
+		if (AAuraHUD* AuraHUD = Cast<AAuraHUD>(AuraPC->GetHUD()))
+		{
+			AuraHUD->InitOverlay(AuraPC, Aura_PlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }
