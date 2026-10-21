@@ -55,7 +55,14 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (TargetASC == nullptr) return;
 
-	check(GameplayEffectClass);
+	if (!GameplayEffectClass)
+	{
+		// 不要用 check()：某个实例/蓝图漏配 GameplayEffectClass 时会直接把编辑器崩掉
+		UE_LOG(LogTemp, Warning, TEXT("[Aura] %s: ApplyEffectToTarget got null GameplayEffectClass (target=%s), skipped"),
+			*GetName(), *GetNameSafe(TargetActor));
+		return;
+	}
+
 	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(this);
 	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.f, EffectContextHandle);

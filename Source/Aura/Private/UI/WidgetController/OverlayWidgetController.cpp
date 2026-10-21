@@ -11,8 +11,8 @@ void UOverlayWidgetController::BroadcastInitialValues()
 	OnHealthChanged.Broadcast(AuraAttributeSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(AuraAttributeSet->GetMaxHealth());
 	
-	OnHealthChanged.Broadcast(AuraAttributeSet->GetMana());
-	OnHealthChanged.Broadcast(AuraAttributeSet->GetMaxMana());
+	OnManaChanged.Broadcast(AuraAttributeSet->GetMana());
+	OnMaxManaChanged.Broadcast(AuraAttributeSet->GetMaxMana());
 	
 }
 
