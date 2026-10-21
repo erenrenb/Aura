@@ -15,7 +15,7 @@ class AURA_API AAuraEffectActor : public AActor
 public:	
 	AAuraEffectActor();
 
-	UFUNCTION()
+/*	UFUNCTION()
 	virtual void OnOverlap(
 		UPrimitiveComponent* OverlappedComponent,
 		AActor* OtherActor,
@@ -32,16 +32,22 @@ public:
 		UPrimitiveComponent* OtherComp, 
 		int32 OtherBodyIndex
 		);
-	
+	*/
 
 protected:
 	virtual void BeginPlay() override;
 	
-private:
+	UFUNCTION(BlueprintCallable)
+	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
+	
+	
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category = "Applied Effects")
+	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
+/*private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
 	
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent> Mesh;
+	TObjectPtr<UStaticMeshComponent> Mesh;*/
 };
 
