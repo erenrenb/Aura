@@ -8,7 +8,6 @@
 #include "AbilitySystemInterface.h"
 #include "Ability/AuraAttributeSet.h"
 #include "Components/SphereComponent.h"
-#include "Runtime/Launch/Private/Apple/LaunchCppToSwift.h"
 
 AAuraEffectActor::AAuraEffectActor()
 {
@@ -126,7 +125,7 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 		{
 			if (TargetASC == HandlePair.Value)
 			{
-				TargetASC->RemoveActiveGameplayEffect(HandlePair.Key);
+				TargetASC->RemoveActiveGameplayEffect(HandlePair.Key,1);
 			}
 		}
 		for (FActiveGameplayEffectHandle& Handle:HandleToRemove)
