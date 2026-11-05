@@ -24,4 +24,9 @@ void AAuraBaseCharacter::BeginPlay()
 	
 }
 
+void AAuraBaseCharacter::InitACInfo()
+{
+	
+}
+
 

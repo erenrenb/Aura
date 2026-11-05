@@ -22,5 +22,5 @@ public:
 	//~ End ILightingInterface
 protected:
 	virtual void BeginPlay() override;
-	
+	virtual void InitACInfo() override;
 };

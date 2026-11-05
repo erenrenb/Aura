@@ -19,5 +19,5 @@ public:
 	virtual void OnRep_PlayerState() override;
 	
 private:
-	void InitACInfo();
+	virtual void InitACInfo() override;
 };

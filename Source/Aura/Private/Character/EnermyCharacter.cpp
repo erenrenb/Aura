@@ -37,6 +37,12 @@ void AEnermyCharacter::UnHighLightActor()
 void AEnermyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	InitACInfo();
+}
+
+void AEnermyCharacter::InitACInfo()
+{
 	AbilitySystemComponent->InitAbilityActorInfo(this,this);
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }
 
