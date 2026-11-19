@@ -25,6 +25,7 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"));
 
 	OverlayWidget=CreateWidget<UAuraUserWidget>(GetWorld(),OverlayWidgetClass);
+	//创建一个对象，即类OverlayWidgetClass的实例，返回UAuraUserWidget* 类型
 
 	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
 	//这里不创建新的UOverlayWidgetController临时指针也可以，直接调用函数即可，创建是习惯，明确每个函数都有返回值

@@ -1,5 +1,3 @@
-//Copyright Druid Mechanics;
-
 
 #include "Character/AuraBaseCharacter.h"
 

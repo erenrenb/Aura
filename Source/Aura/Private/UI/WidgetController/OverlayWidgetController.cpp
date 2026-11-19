@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/OverlayWidgetController.h"
 
+#include "Ability/AuraAbilitySystemComponent.h"
 #include "Ability/AuraAttributeSet.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
@@ -35,6 +36,31 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate
 	(AuraAttributeSet->GetMaxManaAttribute()).
 	AddUObject(this,&UOverlayWidgetController::MaxManaChanged);
+	
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTag.AddLambda(
+		[this](const FGameplayTagContainer& TagContainer)//方括号中加this是捕获当前类，因为本来只能用全局变量或者函数
+		{
+			for (FGameplayTag Tag:TagContainer)
+			{
+				// For example, say that Tag = Message.HealthPotion
+
+				// "Message.HealthPotion".MatchesTag("Message") will return True, 
+				// "Message".MatchesTag("Message.HealthPotion") will return False
+				//子类可属于父类，父类不能属于子类
+				FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+				
+				if (Tag.MatchesTag(MessageTag))
+				{
+					FUIWidgetRow* Row=GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable,Tag);
+					MessageWidgetRowDelegate.Broadcast(*Row);
+				};
+				
+				//const FString Msg = FString::Printf(TEXT("GE Tag: %s"), *Tag.ToString());
+				//GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, Msg);
+
+			}
+		}
+	);
 }
 
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data)const

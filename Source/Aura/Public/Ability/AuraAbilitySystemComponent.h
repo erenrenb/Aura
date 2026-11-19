@@ -11,6 +11,7 @@
  */
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTag,const FGameplayTagContainer&/*Asset Tags*/)
+
 UCLASS()
 class AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
 {

@@ -14,6 +14,6 @@ void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* Ability
 {
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);
-	
+	//获取当前GameplayEffect的全部标签
 	EffectAssetTag.Broadcast(TagContainer);
 }
