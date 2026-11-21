@@ -1,0 +1,23 @@
+# GE_PotionMana
+class   : Blueprint
+parent  : GameplayEffect
+parentPath: /Script/GameplayAbilities.GameplayEffect
+
+## GameplayEffect 配置
+- DurationPolicy = <GameplayEffectDurationType.INSTANT: 0>
+- StackingType = <GameplayEffectStackingType.NONE: 0> (limit=0)
+- DurationMagnitude = <Struct 'GameplayEffectModifierMagnitude' {}>
+- Period = <Struct 'ScalableFloat' {value: 0.000000, curve: {curve_table: None, row_name: ""}, registry_type: {name: ""}}>
+- Modifier[0]: Mana  <GameplayModOp.ADD_BASE: 0>  10
+
+## 属性
+UbergraphPages = "/Script/Engine.EdGraph'EventGraph'"
+bLegacyNeedToPurgeSkelRefs = False
+
+## 子对象 (1)
+- 汇总: EdGraph×1
+
+- EventGraph (EdGraph)  ← GE_PotionMana
+    Schema = "/Script/CoreUObject.Class'/Script/BlueprintGraph.EdGraphSchema_K2'"
+    bAllowDeletion = False
+    GraphGuid = 0B2F6AD541D25158CBB52C875A0F6C5A

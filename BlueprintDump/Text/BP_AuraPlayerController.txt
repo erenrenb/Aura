@@ -1,0 +1,26 @@
+# BP_AuraPlayerController
+class   : Blueprint
+parent  : AuraPlayerController
+parentPath: /Script/Aura.AuraPlayerController
+
+## 组件 (1)
+- TransformComponent0 (SceneComponent)
+- ⚠ 只有根组件，没有碰撞/网格组件：不会触发任何 Overlap 事件
+
+## 图 EventGraph — 2 节点 / 0 连线
+
+[n0] Event BeginPlay (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n1] Event Tick (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out DeltaSeconds(real)=0.0 -> -
+
+## 图 UserConstructionScript — 1 节点 / 0 连线
+
+[n0] Entry UserConstructionScript (K2Node_FunctionEntry) pos=(0,0)
+    out then(exec) -> -

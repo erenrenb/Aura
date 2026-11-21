@@ -1,0 +1,143 @@
+# ABP_Aura
+class   : AnimBlueprint
+parent  : AnimInstance
+parentPath: /Script/Engine.AnimInstance
+
+## 变量 (4)
+- BP_Aura_Character : object  (/Script/Engine.BlueprintGeneratedClass'/Game/BluePrint/Character/Aura/BP_AuraCharacter.BP_AuraCharacter_C')
+- Character Movement : object  (/Script/CoreUObject.Class'/Script/Engine.CharacterMovementComponent')
+- speed : real
+- can not run : bool
+
+## 图 EventGraph — 14 节点 / 15 连线
+
+[n0] Event BlueprintUpdateAnimation (K2Node_Event) pos=(-16,208)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n7.execute
+    out DeltaTimeX(real)=0.0 -> -
+
+[n1] TryGetPawnOwner (K2Node_CallFunction) pos=(16,-48)
+    out ReturnValue(object) -> n3.Object
+
+[n2] Event BlueprintInitializeAnimation (K2Node_Event) pos=(-16,-144)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n3.execute
+
+[n3] Cast to BP_AuraCharacter_C (K2Node_DynamicCast) pos=(368,-112)
+    out then(exec) -> n4.execute
+    out CastFailed(exec) -> -
+    out AsBP Aura Character(object) -> n4.BP_Aura_Character
+    out bSuccess(bool) -> -
+
+[n4] Set BP_Aura_Character (K2Node_VariableSet) pos=(720,-64)
+    out then(exec) -> n6.execute
+    out Output_Get(object) -> n5.self
+
+[n5] Get CharacterMovement (K2Node_VariableGet) pos=(1008,16)
+    out CharacterMovement(object) -> n6.Character Movement
+
+[n6] Set Character Movement (K2Node_VariableSet) pos=(1312,-80)
+    out then(exec) -> -
+    out Output_Get(object) -> -
+
+[n7] Get BP_Aura_Character (K2Node_VariableGet) pos=(400,208)
+    out then(exec) -> n11.execute
+    out else(exec) -> -
+    out BP_Aura_Character(object) -> -
+
+[n8] Get Character Movement (K2Node_VariableGet) pos=(320,448)
+    out Character Movement(object) -> n9.self
+
+[n9] Get Velocity (K2Node_VariableGet) pos=(608,432)
+    out Velocity(struct)=0, 0, 0 -> n10.A
+
+[n10] VSizeXY (K2Node_CallFunction) pos=(912,432)
+    out ReturnValue(real)=0.0 -> n11.speed
+    in  A(struct)=0, 0, 0  [默认值]
+
+[n11] Set speed (K2Node_VariableSet) pos=(1152,272)
+    out then(exec) -> n13.execute
+    out Output_Get(real)=0.0 -> n12.A
+    in  speed(real)=0.0  [默认值]
+
+[n12] Less_DoubleDouble (K2Node_PromotableOperator) pos=(1392,384)
+    out ReturnValue(bool) -> n13.can not run
+    in  B(real)=3.000000  [默认值]
+
+[n13] Set can not run (K2Node_VariableSet) pos=(1632,256)
+    out then(exec) -> -
+    out Output_Get(bool)=false -> -
+    in  can not run(bool)=false  [默认值]
+
+-- 连线 --
+n0(Event BlueprintUpdateAnimation).then -> n7(Get BP_Aura_Character).execute
+n1(TryGetPawnOwner).ReturnValue -> n3(Cast to BP_AuraCharacter_C).Object
+n2(Event BlueprintInitializeAnimation).then -> n3(Cast to BP_AuraCharacter_C).execute
+n3(Cast to BP_AuraCharacter_C).then -> n4(Set BP_Aura_Character).execute
+n3(Cast to BP_AuraCharacter_C).AsBP Aura Character -> n4(Set BP_Aura_Character).BP_Aura_Character
+n4(Set BP_Aura_Character).then -> n6(Set Character Movement).execute
+n4(Set BP_Aura_Character).Output_Get -> n5(Get CharacterMovement).self
+n5(Get CharacterMovement).CharacterMovement -> n6(Set Character Movement).Character Movement
+n7(Get BP_Aura_Character).then -> n11(Set speed).execute
+n8(Get Character Movement).Character Movement -> n9(Get Velocity).self
+n9(Get Velocity).Velocity -> n10(VSizeXY).A
+n10(VSizeXY).ReturnValue -> n11(Set speed).speed
+n11(Set speed).then -> n13(Set can not run).execute
+n11(Set speed).Output_Get -> n12(Less_DoubleDouble).A
+n12(Less_DoubleDouble).ReturnValue -> n13(Set can not run).can not run
+
+## 图 AnimGraph — 3 节点 / 2 连线
+
+[n0] AnimGraphNode_Root (AnimGraphNode_Root) pos=(16,32)
+    in  Result(struct)=(LinkID=-1,SourceLinkID=-1)  [默认值]
+
+[n1] AnimGraphNode_StateMachine (AnimGraphNode_StateMachine) pos=(-416,80)
+    out Pose(struct) -> n2.Source
+
+[n2] AnimGraphNode_Slot (AnimGraphNode_Slot) pos=(-208,96)
+    out Pose(struct) -> n0.Result
+    in  Source(struct)=(LinkID=-1,SourceLinkID=-1)  [默认值]
+
+-- 连线 --
+n2(AnimGraphNode_Slot).Pose -> n0(AnimGraphNode_Root).Result
+n1(AnimGraphNode_StateMachine).Pose -> n2(AnimGraphNode_Slot).Source
+
+## 图 AnimGraph__AnimFunc — 2 节点 / 1 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+
+[n1] Return (K2Node_FunctionResult) pos=(200,-2000)
+
+-- 连线 --
+n0(Entry ).then -> n1(Return).execute
+
+## 图 BlueprintInitializeAnimation — 2 节点 / 1 连线
+
+[n0] Entry BlueprintInitializeAnimation (K2Node_FunctionEntry) pos=(-200,-1600)
+    out then(exec) -> n1.execute
+
+[n1] ExecuteUbergraph_ABP_Aura (K2Node_CallFunction) pos=(300,-1600)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry BlueprintInitializeAnimation).then -> n1(ExecuteUbergraph_ABP_Aura).execute
+
+## 图 BlueprintUpdateAnimation — 3 节点 / 3 连线
+
+[n0] Entry BlueprintUpdateAnimation (K2Node_FunctionEntry) pos=(-200,-1600)
+    out then(exec) -> n1.execute
+    out DeltaTimeX(real)=0.0 -> n1.K2Node_Event_DeltaTimeX
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-1280,-1600)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_ABP_Aura (K2Node_CallFunction) pos=(300,-1600)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry BlueprintUpdateAnimation).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry BlueprintUpdateAnimation).DeltaTimeX -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_DeltaTimeX
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_ABP_Aura).execute

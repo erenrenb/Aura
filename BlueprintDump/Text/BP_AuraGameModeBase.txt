@@ -1,0 +1,29 @@
+# BP_AuraGameModeBase
+class   : Blueprint
+parent  : AuraGameModeBase
+parentPath: /Script/Aura.AuraGameModeBase
+
+## 类默认值
+- DefaultPawnClass = <Object '/Game/BluePrint/Character/Aura/BP_AuraCharacter.BP_AuraCharacter_C' Class 'BlueprintGeneratedClass'>
+- GameStateClass = <Object '/Script/Engine.GameStateBase' Class 'Class'>
+- HUDClass = <Object '/Game/BluePrint/Character/UI/HUD/BP_AuraHUD.BP_AuraHUD_C' Class 'BlueprintGeneratedClass'>
+- PlayerControllerClass = <Object '/Game/BluePrint/Character/Player/BP_AuraPlayerController.BP_AuraPlayerController_C' Class 'BlueprintGeneratedClass'>
+- PlayerStateClass = <Object '/Game/BluePrint/Character/Player/BP_AuraPlayerState.BP_AuraPlayerState_C' Class 'BlueprintGeneratedClass'>
+
+## 图 EventGraph — 2 节点 / 0 连线
+
+[n0] Event BeginPlay (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n1] Event Tick (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out DeltaSeconds(real)=0.0 -> -
+
+## 图 UserConstructionScript — 1 节点 / 0 连线
+
+[n0] Entry UserConstructionScript (K2Node_FunctionEntry) pos=(0,0)
+    out then(exec) -> -

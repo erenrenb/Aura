@@ -1,0 +1,17 @@
+# IMC_Move
+class   : InputMappingContext
+parent  : -
+
+## 属性
+Mappings = (Action="/Script/EnhancedInput.InputAction'/Game/BluePrint/Character/Input/IA_Move.IA_Move'",Key=D)
+Mappings(1) = (Modifiers=("/Script/EnhancedInput.InputModifierNegate'InputModifierNegate_0'"),Action="/Script/EnhancedInput.InputAction'/Game/BluePrint/Character/Input/IA_Move.IA_Move'",Key=A)
+Mappings(2) = (Modifiers=("/Script/EnhancedInput.InputModifierSwizzleAxis'InputModifierSwizzleAxis_1'"),Action="/Script/EnhancedInput.InputAction'/Game/BluePrint/Character/Input/IA_Move.IA_Move'",Key=W)
+Mappings(3) = (Modifiers=("/Script/EnhancedInput.InputModifierNegate'InputModifierNegate_1'","/Script/EnhancedInput.InputModifierSwizzleAxis'InputModifierSwizzleAxis_2'"),Action="/Script/EnhancedInput.InputAction'/Game/BluePrint/Character/Input/IA_Move.IA_Move'",Key=S)
+
+## 子对象 (4)
+- 汇总: InputModifierNegate×2, InputModifierSwizzleAxis×2
+
+- InputModifierNegate_0 (InputModifierNegate)  ← IMC_Move
+- InputModifierNegate_1 (InputModifierNegate)  ← IMC_Move
+- InputModifierSwizzleAxis_1 (InputModifierSwizzleAxis)  ← IMC_Move
+- InputModifierSwizzleAxis_2 (InputModifierSwizzleAxis)  ← IMC_Move

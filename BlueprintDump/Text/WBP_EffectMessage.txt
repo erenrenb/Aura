@@ -1,0 +1,163 @@
+# WBP_EffectMessage
+class   : WidgetBlueprint
+parent  : AuraUserWidget
+parentPath: /Script/Aura.AuraUserWidget
+
+## 变量 (4)
+- ImageSize : struct  (/Script/CoreUObject.ScriptStruct'/Script/CoreUObject.Vector2D')
+- PickupText : object  (/Script/CoreUObject.Class'/Script/UMG.TextBlock', category=WBP_EffectMessage)
+- EffectMessageImage : object  (/Script/CoreUObject.Class'/Script/UMG.Image', category=WBP_EffectMessage)
+- MessageAnimation : object  (/Script/CoreUObject.Class'/Script/UMG.WidgetAnimation', category=Animations)
+
+## 图 EventGraph — 6 节点 / 2 连线
+
+[n0] Event PreConstruct (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out IsDesignTime(bool)=false -> -
+
+[n1] Event Construct (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n2] Event Tick (K2Node_Event) pos=(0,416) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out MyGeometry(struct) -> -
+    out InDeltaTime(real)=0.0 -> -
+
+[n3] DelayDestroy (K2Node_CustomEvent) pos=(416,96)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n4.execute
+
+[n4] Delay (K2Node_CallFunction) pos=(752,144)
+    out then(exec) -> n5.execute
+    in  Duration(real)=1.250000  [默认值]
+    in  LatentInfo(struct)=(Linkage=-1,UUID=-1,ExecutionFunction=\"  [默认值]
+
+[n5] RemoveFromParent (K2Node_CallFunction) pos=(1136,112)
+    out then(exec) -> -
+
+-- 连线 --
+n3(DelayDestroy).then -> n4(Delay).execute
+n4(Delay).then -> n5(RemoveFromParent).execute
+
+## 图 SetImageAndText — 13 节点 / 16 连线
+
+[n0] Entry SetImageAndText (K2Node_FunctionEntry) pos=(-192,-96)
+    out then(exec) -> n2.execute
+    out Image_Icon(object) -> n3.ResourceObject, n9.InputObject
+    out Text_Message(text) -> n6.InText
+
+[n1] Get EffectMessageImage (K2Node_VariableGet) pos=(288,16)
+    out EffectMessageImage(object) -> n2.self
+
+[n2] SetBrush (K2Node_CallFunction) pos=(432,-144)
+    out then(exec) -> n9.exec
+
+[n3] K2Node_MakeStruct (K2Node_MakeStruct) pos=(272,96)
+    out SlateBrush(struct) -> n2.InBrush
+    in  TintColor(struct)=(SpecifiedColor=(R=1.000000,G=1.000000,B  [默认值]
+    in  DrawAs(byte)=Image  [默认值]
+    in  Tiling(byte)=NoTile  [默认值]
+    in  Mirroring(byte)=NoMirror  [默认值]
+    in  ImageSize(struct)=(X=32.000000,Y=32.000000)  [默认值]
+    in  Margin(struct)=(Left=0.000000,Top=0.000000,Right=0.0000  [默认值]
+    in  OutlineSettings(struct)=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.  [默认值]
+
+[n4] Get ImageSize (K2Node_VariableGet) pos=(-208,336)
+    out ImageSize(struct) -> n3.ImageSize
+
+[n5] Get PickupText (K2Node_VariableGet) pos=(720,144)
+    out PickupText(object) -> n6.self
+
+[n6] SetText (K2Node_CallFunction) pos=(992,-272)
+    out then(exec) -> n11.InputPin
+
+[n7] Get MessageAnimation (K2Node_VariableGet) pos=(976,176)
+    out MessageAnimation(object) -> n8.InAnimation
+
+[n8] PlayAnimation (K2Node_CallFunction) pos=(1360,-144)
+    out then(exec) -> n12.execute
+    out ReturnValue(struct) -> -
+    in  StartAtTime(real)=0.000000  [默认值]
+    in  NumLoopsToPlay(int)=1  [默认值]
+    in  PlayMode(byte)=Forward  [默认值]
+    in  PlaybackSpeed(real)=1.000000  [默认值]
+    in  bRestoreState(bool)=false  [默认值]
+
+[n9] Macro IsValid' (K2Node_MacroInstance) pos=(640,-128)
+    out Is Valid(exec) -> n10.InputPin
+    out Is Not Valid(exec) -> n8.execute
+
+[n10] Reroute (K2Node_Knot) pos=(880,-224)
+    out OutputPin(exec) -> n6.execute
+
+[n11] Reroute (K2Node_Knot) pos=(1184,-144)
+    out OutputPin(exec) -> n8.execute
+
+[n12] DelayDestroy (K2Node_CallFunction) pos=(1952,-80)
+    out then(exec) -> -
+
+-- 连线 --
+n0(Entry SetImageAndText).then -> n2(SetBrush).execute
+n0(Entry SetImageAndText).Image_Icon -> n3(K2Node_MakeStruct).ResourceObject
+n0(Entry SetImageAndText).Image_Icon -> n9(Macro IsValid').InputObject
+n0(Entry SetImageAndText).Text_Message -> n6(SetText).InText
+n1(Get EffectMessageImage).EffectMessageImage -> n2(SetBrush).self
+n2(SetBrush).then -> n9(Macro IsValid').exec
+n3(K2Node_MakeStruct).SlateBrush -> n2(SetBrush).InBrush
+n4(Get ImageSize).ImageSize -> n3(K2Node_MakeStruct).ImageSize
+n5(Get PickupText).PickupText -> n6(SetText).self
+n10(Reroute).OutputPin -> n6(SetText).execute
+n6(SetText).then -> n11(Reroute).InputPin
+n7(Get MessageAnimation).MessageAnimation -> n8(PlayAnimation).InAnimation
+n9(Macro IsValid').Is Not Valid -> n8(PlayAnimation).execute
+n11(Reroute).OutputPin -> n8(PlayAnimation).execute
+n8(PlayAnimation).then -> n12(DelayDestroy).execute
+n9(Macro IsValid').Is Valid -> n10(Reroute).InputPin
+
+## 图 EdGraph_0 — 4 节点 / 5 连线
+
+[n0] K2Node_Tunnel (K2Node_Tunnel) pos=(-496,-272)
+    out exec(exec) -> n2.execute
+    out InputObject(object) -> n3.Object
+
+[n1] K2Node_Tunnel (K2Node_Tunnel) pos=(288,-272)
+
+[n2] K2Node_IfThenElse (K2Node_IfThenElse) pos=(-16,-272)
+    out then(exec) -> n1.Is Valid
+    out else(exec) -> n1.Is Not Valid
+    in  Condition(bool)=false  [默认值]
+
+[n3] IsValid (K2Node_CallFunction) pos=(-304,-208)
+    out ReturnValue(bool)=false -> n2.Condition
+
+-- 连线 --
+n0(K2Node_Tunnel).exec -> n2(K2Node_IfThenElse).execute
+n0(K2Node_Tunnel).InputObject -> n3(IsValid).Object
+n2(K2Node_IfThenElse).then -> n1(K2Node_Tunnel).Is Valid
+n2(K2Node_IfThenElse).else -> n1(K2Node_Tunnel).Is Not Valid
+n3(IsValid).ReturnValue -> n2(K2Node_IfThenElse).Condition
+
+## 图 DelayDestroy — 2 节点 / 1 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+
+[n1] ExecuteUbergraph_WBP_EffectMessage (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ).then -> n1(ExecuteUbergraph_WBP_EffectMessage).execute
+
+## 控件树 / Designer 设置
+- Overlay_0 (Overlay)
+  - HorizontalBox_29 (HorizontalBox)  slot=OverlaySlot
+    - EffectMessageImage (Image)  slot=HorizontalBoxSlot
+    - Spacer_75 (Spacer)  slot=HorizontalBoxSlot
+    - PickupText (TextBlock)  slot=HorizontalBoxSlot  Text=NSLOCTEXT("[FED9974E9DD786116D45E0D8CE4F0F22]", "A6583C644B8

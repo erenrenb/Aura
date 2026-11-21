@@ -1,0 +1,6 @@
+# IA_Move
+class   : InputAction
+parent  : -
+
+## 属性
+ValueType = Axis2D

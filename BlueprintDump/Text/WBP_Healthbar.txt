@@ -1,0 +1,210 @@
+# WBP_Healthbar
+class   : WidgetBlueprint
+parent  : WBP_BaseGalobeProgressbar_C
+parentPath: /Game/BluePrint/Character/UI/Progressbar/WBP_BaseGalobeProgressbar.WBP_BaseGalobeProgressbar_C
+
+## 变量 (3)
+- Health : real
+- Max Health : real
+- As BP Overlay Widget Controller : object  (/Script/Engine.BlueprintGeneratedClass'/Game/BluePrint/Character/UI/WidgetController/BP_OverlayWidgetController.BP_OverlayWidgetController_C')
+
+## 图 EventGraph — 25 节点 / 25 连线
+
+[n0] EdGraphNode_Comment (EdGraphNode_Comment) pos=(624,544)
+    comment: changehealth
+
+[n1] EdGraphNode_Comment (EdGraphNode_Comment) pos=(416,1072)
+    comment: changeMaxhealth
+
+[n2] EdGraphNode_Comment (EdGraphNode_Comment) pos=(320,480)
+    comment: 注释
+
+[n3] Event PreConstruct (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n4.execute
+    out IsDesignTime(bool)=false -> n4.IsDesignTime
+
+[n4] PreConstruct (K2Node_CallParentFunction) pos=(200,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out then(exec) -> -
+    in  IsDesignTime(bool)=false  [默认值]
+
+[n5] Event Construct (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n6] Get WidgetController (K2Node_VariableGet) pos=(304,304)
+    out WidgetController(object) -> n7.Object
+
+[n7] Cast to BP_OverlayWidgetController_C (K2Node_DynamicCast) pos=(720,-48)
+    out then(exec) -> n9.execute
+    out CastFailed(exec) -> -
+    out AsBP Overlay Widget Controller(object) -> n9.self, n11.self
+    out bSuccess(bool) -> -
+
+[n8] OnHealthChanged_事件 (K2Node_CustomEvent) pos=(688,608)
+    out OutputDelegate(delegate) -> n9.Delegate
+    out then(exec) -> n13.execute
+    out NewValue(real) -> n13.Health
+
+[n9] Bind OnHealthChanged (K2Node_AssignDelegate) pos=(848,144)
+    out then(exec) -> n11.execute
+
+[n10] OnMaxHealthChanged_事件 (K2Node_CustomEvent) pos=(400,1136)
+    out OutputDelegate(delegate) -> n11.Delegate
+    out then(exec) -> n14.execute
+    out NewValue(real) -> n14.Max Health
+
+[n11] Bind OnMaxHealthChanged (K2Node_AssignDelegate) pos=(1536,48)
+    out then(exec) -> -
+
+[n12] Event WidgetControllerSet (K2Node_Event) pos=(208,96)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n7.execute
+
+[n13] Set Health (K2Node_VariableSet) pos=(912,688)
+    out then(exec) -> n15.execute
+    out Output_Get(real)=0.0 -> -
+    in  Health(real)=0.0  [默认值]
+
+[n14] Set Max Health (K2Node_VariableSet) pos=(704,1200)
+    out then(exec) -> n22.execute
+    out Output_Get(real)=0.0 -> -
+    in  Max Health(real)=0.0  [默认值]
+
+[n15] SetProgressPercent (K2Node_CallFunction) pos=(1088,704)
+    out then(exec) -> -
+    in  Percent(real)=0.0  [默认值]
+
+[n16] Get Health (K2Node_VariableGet) pos=(688,800)
+    out Health(real)=0.0 -> n18.A
+
+[n17] Get Max Health (K2Node_VariableGet) pos=(688,880)
+    out Max Health(real)=0.0 -> n18.B
+
+[n18] SafeDivide (K2Node_CallFunction) pos=(864,832)
+    out ReturnValue(real)=0.0 -> n15.Percent
+    in  A(real)=0.0  [默认值]
+    in  B(real)=0.0  [默认值]
+
+[n19] Get Health (K2Node_VariableGet) pos=(656,1328)
+    out Health(real)=0.0 -> n21.A
+
+[n20] Get Max Health (K2Node_VariableGet) pos=(640,1408)
+    out Max Health(real)=0.0 -> n21.B
+
+[n21] SafeDivide (K2Node_CallFunction) pos=(848,1344)
+    out ReturnValue(real)=0.0 -> n22.Percent
+    in  A(real)=0.0  [默认值]
+    in  B(real)=0.0  [默认值]
+
+[n22] SetProgressPercent (K2Node_CallFunction) pos=(1024,1168)
+    out then(exec) -> -
+    in  Percent(real)=0.0  [默认值]
+
+[n23] Event Tick (K2Node_Event) pos=(297,1620)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n24.execute
+    out MyGeometry(struct) -> n24.MyGeometry
+    out InDeltaTime(real)=0.0 -> n24.InDeltaTime
+
+[n24] Tick (K2Node_CallParentFunction) pos=(560,1632)
+    out then(exec) -> -
+    in  InDeltaTime(real)=0.0  [默认值]
+
+-- 连线 --
+n3(Event PreConstruct).then -> n4(PreConstruct).execute
+n3(Event PreConstruct).IsDesignTime -> n4(PreConstruct).IsDesignTime
+n6(Get WidgetController).WidgetController -> n7(Cast to BP_OverlayWidgetController_C).Object
+n12(Event WidgetControllerSet).then -> n7(Cast to BP_OverlayWidgetController_C).execute
+n7(Cast to BP_OverlayWidgetController_C).then -> n9(Bind OnHealthChanged).execute
+n7(Cast to BP_OverlayWidgetController_C).AsBP Overlay Widget Controller -> n9(Bind OnHealthChanged).self
+n7(Cast to BP_OverlayWidgetController_C).AsBP Overlay Widget Controller -> n11(Bind OnMaxHealthChanged).self
+n8(OnHealthChanged_事件).OutputDelegate -> n9(Bind OnHealthChanged).Delegate
+n8(OnHealthChanged_事件).then -> n13(Set Health).execute
+n8(OnHealthChanged_事件).NewValue -> n13(Set Health).Health
+n9(Bind OnHealthChanged).then -> n11(Bind OnMaxHealthChanged).execute
+n10(OnMaxHealthChanged_事件).OutputDelegate -> n11(Bind OnMaxHealthChanged).Delegate
+n10(OnMaxHealthChanged_事件).then -> n14(Set Max Health).execute
+n10(OnMaxHealthChanged_事件).NewValue -> n14(Set Max Health).Max Health
+n13(Set Health).then -> n15(SetProgressPercent).execute
+n14(Set Max Health).then -> n22(SetProgressPercent).execute
+n18(SafeDivide).ReturnValue -> n15(SetProgressPercent).Percent
+n16(Get Health).Health -> n18(SafeDivide).A
+n17(Get Max Health).Max Health -> n18(SafeDivide).B
+n19(Get Health).Health -> n21(SafeDivide).A
+n20(Get Max Health).Max Health -> n21(SafeDivide).B
+n21(SafeDivide).ReturnValue -> n22(SetProgressPercent).Percent
+n23(Event Tick).then -> n24(Tick).execute
+n23(Event Tick).MyGeometry -> n24(Tick).MyGeometry
+n23(Event Tick).InDeltaTime -> n24(Tick).InDeltaTime
+
+## 图 Tick — 3 节点 / 4 连线
+
+[n0] Entry Tick (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out MyGeometry(struct) -> n1.K2Node_Event_MyGeometry
+    out InDeltaTime(real)=0.0 -> n1.K2Node_Event_InDeltaTime
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-560,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_Healthbar (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry Tick).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry Tick).MyGeometry -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_MyGeometry
+n0(Entry Tick).InDeltaTime -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_InDeltaTime
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_Healthbar).execute
+
+## 图 WidgetControllerSet — 2 节点 / 1 连线
+
+[n0] Entry WidgetControllerSet (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+
+[n1] ExecuteUbergraph_WBP_Healthbar (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry WidgetControllerSet).then -> n1(ExecuteUbergraph_WBP_Healthbar).execute
+
+## 图 OnMaxHealthChanged_事件 — 3 节点 / 3 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out NewValue(real) -> n1.K2Node_CustomEvent_NewValue
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(640,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_Healthbar (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ).NewValue -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_CustomEvent_NewValue
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_Healthbar).execute
+
+## 图 OnHealthChanged_事件 — 3 节点 / 3 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out NewValue(real) -> n1.K2Node_CustomEvent_NewValue_1
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(1360,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_Healthbar (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ).NewValue -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_CustomEvent_NewValue_1
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_Healthbar).execute

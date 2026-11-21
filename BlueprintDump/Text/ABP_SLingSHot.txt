@@ -1,0 +1,25 @@
+# ABP_SLingSHot
+class   : AnimBlueprint
+parent  : ABP_Enermy_C
+parentPath: /Game/BluePrint/Character/ABP_Enermy.ABP_Enermy_C
+
+## 图 EventGraph — 3 节点 / 2 连线
+
+[n0] Event BlueprintUpdateAnimation (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n1.execute
+    out DeltaTimeX(real)=0.0 -> n1.DeltaTimeX
+
+[n1] BlueprintUpdateAnimation (K2Node_CallParentFunction) pos=(200,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out then(exec) -> -
+    in  DeltaTimeX(real)=0.0  [默认值]
+
+[n2] TryGetPawnOwner (K2Node_CallFunction) pos=(0,100) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out ReturnValue(object) -> -
+
+-- 连线 --
+n0(Event BlueprintUpdateAnimation).then -> n1(BlueprintUpdateAnimation).execute
+n0(Event BlueprintUpdateAnimation).DeltaTimeX -> n1(BlueprintUpdateAnimation).DeltaTimeX

@@ -1,0 +1,23 @@
+# GE_CrystalHeal
+class   : Blueprint
+parent  : GameplayEffect
+parentPath: /Script/GameplayAbilities.GameplayEffect
+
+## GameplayEffect 配置
+- DurationPolicy = <GameplayEffectDurationType.HAS_DURATION: 2>
+- StackingType = <GameplayEffectStackingType.AGGREGATE_BY_TARGET: 2> (limit=2)
+- DurationMagnitude = <Struct 'GameplayEffectModifierMagnitude' {}>
+- Period = <Struct 'ScalableFloat' {value: 0.100000, curve: {curve_table: None, row_name: ""}, registry_type: {name: ""}}>
+- Modifier[0]: Health  <GameplayModOp.ADD_BASE: 0>  1
+
+## 属性
+UbergraphPages = "/Script/Engine.EdGraph'EventGraph'"
+bLegacyNeedToPurgeSkelRefs = False
+
+## 子对象 (1)
+- 汇总: EdGraph×1
+
+- EventGraph (EdGraph)  ← GE_CrystalHeal
+    Schema = "/Script/CoreUObject.Class'/Script/BlueprintGraph.EdGraphSchema_K2'"
+    bAllowDeletion = False
+    GraphGuid = 54202DD147E5605FF8595AB05765B488

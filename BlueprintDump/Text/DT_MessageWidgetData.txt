@@ -1,0 +1,13 @@
+# DT_MessageWidgetData
+class   : DataTable
+parent  : -
+
+## 属性
+RowStruct = "/Script/CoreUObject.ScriptStruct'/Script/Aura.UIWidgetRow'"
+AssetImportData = "/Script/Engine.AssetImportData'AssetImportData'"
+RowStructPathName = "/Script/Aura.UIWidgetRow"
+
+## 子对象 (1)
+- 汇总: AssetImportData×1
+
+- AssetImportData (AssetImportData)  ← DT_MessageWidgetData

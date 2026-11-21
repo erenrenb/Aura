@@ -1,0 +1,189 @@
+# WBP_Overlay
+class   : WidgetBlueprint
+parent  : AuraUserWidget
+parentPath: /Script/Aura.AuraUserWidget
+
+## 变量 (3)
+- BP Overlay Widget Controller : object  (/Script/Engine.BlueprintGeneratedClass'/Game/BluePrint/Character/UI/WidgetController/BP_OverlayWidgetController.BP_OverlayWidgetController_C')
+- WBP_Mana : object  (/Script/UMG.WidgetBlueprintGeneratedClass'/Game/BluePrint/Character/UI/Progressbar/WBP_Mana.WBP_Mana_C', category=WBP_Overlay)
+- WBP_Healthbar : object  (/Script/UMG.WidgetBlueprintGeneratedClass'/Game/BluePrint/Character/UI/Progressbar/WBP_Healthbar.WBP_Healthbar_C', category=WBP_Overlay)
+
+## 图 EventGraph — 27 节点 / 31 连线
+
+[n0] Event PreConstruct (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out IsDesignTime(bool)=false -> -
+
+[n1] Event Construct (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n2] Event Tick (K2Node_Event) pos=(0,416) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out MyGeometry(struct) -> -
+    out InDeltaTime(real)=0.0 -> -
+
+[n3] Event WidgetControllerSet (K2Node_Event) pos=(176,0)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n10.execute
+
+[n4] SetWidgetController (K2Node_CallFunction) pos=(960,176)
+    out then(exec) -> n8.execute
+
+[n5] Get WBP_Healthbar (K2Node_VariableGet) pos=(752,288)
+    out WBP_Healthbar(object) -> n4.self
+
+[n6] Get WBP_Mana (K2Node_VariableGet) pos=(1088,336)
+    out WBP_Mana(object) -> n8.self
+
+[n7] Get WidgetController (K2Node_VariableGet) pos=(784,416)
+    out WidgetController(object) -> n4.InWidgetController
+
+[n8] SetWidgetController (K2Node_CallFunction) pos=(1392,176)
+    out then(exec) -> -
+
+[n9] Get WidgetController (K2Node_VariableGet) pos=(1088,432)
+    out WidgetController(object) -> n8.InWidgetController
+
+[n10] Sequence (K2Node_ExecutionSequence) pos=(416,144)
+    out then_0(exec) -> n13.execute
+    out then_1(exec) -> n11.InputPin
+    out then_2(exec) -> n17.execute
+
+[n11] Reroute (K2Node_Knot) pos=(800,128)
+    out OutputPin(exec) -> n4.execute
+
+[n12] Get WidgetController (K2Node_VariableGet) pos=(736,64)
+    out WidgetController(object) -> n13.Object
+
+[n13] Cast to BP_OverlayWidgetController_C (K2Node_DynamicCast) pos=(928,-80)
+    out then(exec) -> n14.execute
+    out CastFailed(exec) -> -
+    out AsBP Overlay Widget Controller(object) -> n14.BP Overlay Widget Controller
+    out bSuccess(bool) -> -
+
+[n14] Set BP Overlay Widget Controller (K2Node_VariableSet) pos=(1296,0)
+    out then(exec) -> -
+    out Output_Get(object) -> -
+
+[n15] Get BP Overlay Widget Controller (K2Node_VariableGet) pos=(592,720)
+    out BP Overlay Widget Controller(object) -> n17.self
+
+[n16] MessageWidgetRowDelegate_事件 (K2Node_CustomEvent) pos=(560,880)
+    out OutputDelegate(delegate) -> n17.Delegate
+    out then(exec) -> n19.execute
+    out Row(struct) -> n18.UIWidgetRow
+
+[n17] Bind MessageWidgetRowDelegate (K2Node_AssignDelegate) pos=(784,608)
+    out then(exec) -> -
+
+[n18] K2Node_BreakStruct (K2Node_BreakStruct) pos=(928,992)
+    out MessageTag(struct) -> -
+    out Message(text) -> n22.Text_Message
+    out MessageWidget(class) -> n19.Class
+    out Image(object) -> n22.Image_Icon
+
+[n19] K2Node_CreateWidget (K2Node_CreateWidget) pos=(1264,896)
+    out then(exec) -> n24.execute
+    out ReturnValue(object) -> n21.Object, n24.self
+
+[n20] GetPlayerController (K2Node_CallFunction) pos=(1088,1232)
+    out ReturnValue(object) -> n19.OwningPlayer
+    in  PlayerIndex(int)=0  [默认值]
+
+[n21] Cast to WBP_EffectMessage_C (K2Node_DynamicCast) pos=(1808,896)
+    out then(exec) -> n22.execute
+    out CastFailed(exec) -> -
+    out AsWBP Effect Message(object) -> n22.self, n23.self
+    out bSuccess(bool) -> -
+
+[n22] SetImageAndText (K2Node_CallFunction) pos=(2176,880)
+    out then(exec) -> n23.execute
+
+[n23] AddToViewport (K2Node_CallFunction) pos=(2512,896)
+    out then(exec) -> -
+    in  ZOrder(int)=0  [默认值]
+
+[n24] SetPositionInViewport (K2Node_CallFunction) pos=(1568,672)
+    out then(exec) -> n21.execute
+    in  bRemoveDPIScale(bool)=true  [默认值]
+
+[n25] GetViewportSize (K2Node_CallFunction) pos=(976,816)
+    out ReturnValue(struct) -> n26.A
+
+[n26] Multiply_Vector2DVector2D (K2Node_PromotableOperator) pos=(1232,688)
+    out ReturnValue(struct) -> n24.Position
+    in  B(real)=0.500000  [默认值]
+
+-- 连线 --
+n3(Event WidgetControllerSet).then -> n10(Sequence).execute
+n11(Reroute).OutputPin -> n4(SetWidgetController).execute
+n4(SetWidgetController).then -> n8(SetWidgetController).execute
+n5(Get WBP_Healthbar).WBP_Healthbar -> n4(SetWidgetController).self
+n7(Get WidgetController).WidgetController -> n4(SetWidgetController).InWidgetController
+n6(Get WBP_Mana).WBP_Mana -> n8(SetWidgetController).self
+n9(Get WidgetController).WidgetController -> n8(SetWidgetController).InWidgetController
+n10(Sequence).then_0 -> n13(Cast to BP_OverlayWidgetController_C).execute
+n10(Sequence).then_1 -> n11(Reroute).InputPin
+n10(Sequence).then_2 -> n17(Bind MessageWidgetRowDelegate).execute
+n12(Get WidgetController).WidgetController -> n13(Cast to BP_OverlayWidgetController_C).Object
+n13(Cast to BP_OverlayWidgetController_C).then -> n14(Set BP Overlay Widget Controller).execute
+n13(Cast to BP_OverlayWidgetController_C).AsBP Overlay Widget Controller -> n14(Set BP Overlay Widget Controller).BP Overlay Widget Controller
+n15(Get BP Overlay Widget Controller).BP Overlay Widget Controller -> n17(Bind MessageWidgetRowDelegate).self
+n16(MessageWidgetRowDelegate_事件).OutputDelegate -> n17(Bind MessageWidgetRowDelegate).Delegate
+n16(MessageWidgetRowDelegate_事件).then -> n19(K2Node_CreateWidget).execute
+n16(MessageWidgetRowDelegate_事件).Row -> n18(K2Node_BreakStruct).UIWidgetRow
+n18(K2Node_BreakStruct).Message -> n22(SetImageAndText).Text_Message
+n18(K2Node_BreakStruct).MessageWidget -> n19(K2Node_CreateWidget).Class
+n18(K2Node_BreakStruct).Image -> n22(SetImageAndText).Image_Icon
+n19(K2Node_CreateWidget).then -> n24(SetPositionInViewport).execute
+n19(K2Node_CreateWidget).ReturnValue -> n21(Cast to WBP_EffectMessage_C).Object
+n19(K2Node_CreateWidget).ReturnValue -> n24(SetPositionInViewport).self
+n20(GetPlayerController).ReturnValue -> n19(K2Node_CreateWidget).OwningPlayer
+n24(SetPositionInViewport).then -> n21(Cast to WBP_EffectMessage_C).execute
+n21(Cast to WBP_EffectMessage_C).then -> n22(SetImageAndText).execute
+n21(Cast to WBP_EffectMessage_C).AsWBP Effect Message -> n22(SetImageAndText).self
+n21(Cast to WBP_EffectMessage_C).AsWBP Effect Message -> n23(AddToViewport).self
+n22(SetImageAndText).then -> n23(AddToViewport).execute
+n26(Multiply_Vector2DVector2D).ReturnValue -> n24(SetPositionInViewport).Position
+n25(GetViewportSize).ReturnValue -> n26(Multiply_Vector2DVector2D).A
+
+## 图 MessageWidgetRowDelegate_事件 — 3 节点 / 3 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out Row(struct) -> n1.K2Node_CustomEvent_Row
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-800,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_Overlay (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ).Row -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_CustomEvent_Row
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_Overlay).execute
+
+## 图 WidgetControllerSet — 2 节点 / 1 连线
+
+[n0] Entry WidgetControllerSet (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+
+[n1] ExecuteUbergraph_WBP_Overlay (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry WidgetControllerSet).then -> n1(ExecuteUbergraph_WBP_Overlay).execute
+
+## 控件树 / Designer 设置
+- CanvasPanel_25 (CanvasPanel)
+  - WBP_Healthbar (WBP_Healthbar_C)  slot=CanvasPanelSlot anchors=(0.5,1,0.5,1) offsets=(-760.961,-369.081,0,0) autoSize=True
+  - WBP_Mana (WBP_Mana_C)  slot=CanvasPanelSlot anchors=(0.5,1,0.5,1) offsets=(443.039,-369.081,0,0) autoSize=True

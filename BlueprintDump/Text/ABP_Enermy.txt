@@ -1,0 +1,120 @@
+# ABP_Enermy
+class   : AnimBlueprint
+parent  : AnimInstance
+parentPath: /Script/Engine.AnimInstance
+
+## 变量 (2)
+- Character Movement : object  (/Script/CoreUObject.Class'/Script/Engine.CharacterMovementComponent')
+- GronudSpeed : real
+
+## 图 EventGraph — 10 节点 / 10 连线
+
+[n0] Event BlueprintUpdateAnimation (K2Node_Event) pos=(-16,32)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n6.execute
+    out DeltaTimeX(real)=0.0 -> -
+
+[n1] TryGetPawnOwner (K2Node_CallFunction) pos=(0,-160)
+    out ReturnValue(object) -> n3.Object
+
+[n2] Event BlueprintInitializeAnimation (K2Node_Event) pos=(0,-240)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n3.execute
+
+[n3] Cast to EnermyCharacter (K2Node_DynamicCast) pos=(368,-192)
+    out then(exec) -> n5.execute
+    out CastFailed(exec) -> -
+    out AsEnermy Character(object) -> n4.self
+    out bSuccess(bool) -> -
+
+[n4] Get CharacterMovement (K2Node_VariableGet) pos=(720,-96)
+    out CharacterMovement(object) -> n5.Character Movement
+
+[n5] Set Character Movement (K2Node_VariableSet) pos=(1040,-176)
+    out then(exec) -> -
+    out Output_Get(object) -> -
+
+[n6] Get Character Movement (K2Node_VariableGet) pos=(368,32)
+    out then(exec) -> n9.execute
+    out else(exec) -> -
+    out Character Movement(object) -> n7.self
+
+[n7] Get Velocity (K2Node_VariableGet) pos=(672,144)
+    out Velocity(struct)=0, 0, 0 -> n8.A
+
+[n8] VSizeXY (K2Node_CallFunction) pos=(912,128)
+    out ReturnValue(real)=0.0 -> n9.GronudSpeed
+    in  A(struct)=0, 0, 0  [默认值]
+
+[n9] Set GronudSpeed (K2Node_VariableSet) pos=(1136,48)
+    out then(exec) -> -
+    out Output_Get(real)=0.0 -> -
+    in  GronudSpeed(real)=0.0  [默认值]
+
+-- 连线 --
+n0(Event BlueprintUpdateAnimation).then -> n6(Get Character Movement).execute
+n1(TryGetPawnOwner).ReturnValue -> n3(Cast to EnermyCharacter).Object
+n2(Event BlueprintInitializeAnimation).then -> n3(Cast to EnermyCharacter).execute
+n3(Cast to EnermyCharacter).then -> n5(Set Character Movement).execute
+n3(Cast to EnermyCharacter).AsEnermy Character -> n4(Get CharacterMovement).self
+n4(Get CharacterMovement).CharacterMovement -> n5(Set Character Movement).Character Movement
+n6(Get Character Movement).then -> n9(Set GronudSpeed).execute
+n6(Get Character Movement).Character Movement -> n7(Get Velocity).self
+n7(Get Velocity).Velocity -> n8(VSizeXY).A
+n8(VSizeXY).ReturnValue -> n9(Set GronudSpeed).GronudSpeed
+
+## 图 AnimGraph — 3 节点 / 2 连线
+
+[n0] AnimGraphNode_Root (AnimGraphNode_Root) pos=(64,0)
+    in  Result(struct)=(LinkID=-1,SourceLinkID=-1)  [默认值]
+
+[n1] AnimGraphNode_StateMachine (AnimGraphNode_StateMachine) pos=(-384,16)
+    out Pose(struct) -> n2.Source
+
+[n2] AnimGraphNode_Slot (AnimGraphNode_Slot) pos=(-176,80)
+    out Pose(struct) -> n0.Result
+    in  Source(struct)=(LinkID=-1,SourceLinkID=-1)  [默认值]
+
+-- 连线 --
+n2(AnimGraphNode_Slot).Pose -> n0(AnimGraphNode_Root).Result
+n1(AnimGraphNode_StateMachine).Pose -> n2(AnimGraphNode_Slot).Source
+
+## 图 AnimGraph__AnimFunc — 2 节点 / 1 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+
+[n1] Return (K2Node_FunctionResult) pos=(200,-2000)
+
+-- 连线 --
+n0(Entry ).then -> n1(Return).execute
+
+## 图 BlueprintInitializeAnimation — 2 节点 / 1 连线
+
+[n0] Entry BlueprintInitializeAnimation (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+
+[n1] ExecuteUbergraph_ABP_Enermy (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry BlueprintInitializeAnimation).then -> n1(ExecuteUbergraph_ABP_Enermy).execute
+
+## 图 BlueprintUpdateAnimation — 3 节点 / 3 连线
+
+[n0] Entry BlueprintUpdateAnimation (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out DeltaTimeX(real)=0.0 -> n1.K2Node_Event_DeltaTimeX
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(880,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_ABP_Enermy (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry BlueprintUpdateAnimation).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry BlueprintUpdateAnimation).DeltaTimeX -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_DeltaTimeX
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_ABP_Enermy).execute

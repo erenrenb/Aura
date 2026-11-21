@@ -1,0 +1,111 @@
+# BP_Fire
+class   : Blueprint
+parent  : AuraEffectActor
+parentPath: /Script/Aura.AuraEffectActor
+
+## 组件 (1)
+- RootSceneComponent (SceneComponent)
+- ⚠ 只有根组件，没有碰撞/网格组件：不会触发任何 Overlap 事件
+
+## 类默认值
+- InfiniteGameplayEffectClass = <Object '/Game/BluePrint/Character/Actor/fire/GE_Fire.GE_Fire_C' Class 'BlueprintGeneratedClass'>
+
+## 图 EventGraph — 6 节点 / 4 连线
+
+[n0] Event BeginPlay (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n1] Event Tick (K2Node_Event) pos=(0,416) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out DeltaSeconds(real)=0.0 -> -
+
+[n2] Event ComponentBeginOverlapSignature__DelegateSignature (K2Node_ComponentBoundEvent) pos=(272,32)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n3.execute
+    out OverlappedComponent(object) -> -
+    out OtherActor(object) -> n3.TargetActor
+    out OtherComp(object) -> -
+    out OtherBodyIndex(int)=0 -> -
+    out bFromSweep(bool)=false -> -
+    out SweepResult(struct) -> -
+
+[n3] OnOverlap (K2Node_CallFunction) pos=(752,96)
+    out then(exec) -> -
+
+[n4] Event ComponentEndOverlapSignature__DelegateSignature (K2Node_ComponentBoundEvent) pos=(272,480)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n5.execute
+    out OverlappedComponent(object) -> -
+    out OtherActor(object) -> n5.TargetActor
+    out OtherComp(object) -> -
+    out OtherBodyIndex(int)=0 -> -
+
+[n5] OnEndOverlap (K2Node_CallFunction) pos=(704,496)
+    out then(exec) -> -
+
+-- 连线 --
+n2(Event ComponentBeginOverlapSignature__DelegateSignature).then -> n3(OnOverlap).execute
+n2(Event ComponentBeginOverlapSignature__DelegateSignature).OtherActor -> n3(OnOverlap).TargetActor
+n4(Event ComponentEndOverlapSignature__DelegateSignature).then -> n5(OnEndOverlap).execute
+n4(Event ComponentEndOverlapSignature__DelegateSignature).OtherActor -> n5(OnEndOverlap).TargetActor
+
+## 图 UserConstructionScript — 1 节点 / 0 连线
+
+[n0] Entry UserConstructionScript (K2Node_FunctionEntry) pos=(0,0)
+    out then(exec) -> -
+
+## 图 BndEvt__BP_Fire_Box_K2Node_ComponentBoundEvent_1_ComponentEndOverlapSignature__DelegateSignature — 3 节点 / 6 连线
+
+[n0] Entry ComponentEndOverlapSignature__DelegateSignature (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out OverlappedComponent(object) -> n1.K2Node_ComponentBoundEvent_OverlappedComponent
+    out OtherActor(object) -> n1.K2Node_ComponentBoundEvent_OtherActor
+    out OtherComp(object) -> n1.K2Node_ComponentBoundEvent_OtherComp
+    out OtherBodyIndex(int)=0 -> n1.K2Node_ComponentBoundEvent_OtherBodyIndex
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-1520,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_BP_Fire (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ComponentEndOverlapSignature__DelegateSignature).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ComponentEndOverlapSignature__DelegateSignature).OverlappedComponent -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OverlappedComponent
+n0(Entry ComponentEndOverlapSignature__DelegateSignature).OtherActor -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherActor
+n0(Entry ComponentEndOverlapSignature__DelegateSignature).OtherComp -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherComp
+n0(Entry ComponentEndOverlapSignature__DelegateSignature).OtherBodyIndex -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherBodyIndex
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_BP_Fire).execute
+
+## 图 BndEvt__BP_Fire_Box_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature — 3 节点 / 8 连线
+
+[n0] Entry ComponentBeginOverlapSignature__DelegateSignature (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out OverlappedComponent(object) -> n1.K2Node_ComponentBoundEvent_OverlappedComponent_1
+    out OtherActor(object) -> n1.K2Node_ComponentBoundEvent_OtherActor_1
+    out OtherComp(object) -> n1.K2Node_ComponentBoundEvent_OtherComp_1
+    out OtherBodyIndex(int)=0 -> n1.K2Node_ComponentBoundEvent_OtherBodyIndex_1
+    out bFromSweep(bool)=false -> n1.K2Node_ComponentBoundEvent_bFromSweep
+    out SweepResult(struct) -> n1.K2Node_ComponentBoundEvent_SweepResult
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-800,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_BP_Fire (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OverlappedComponent -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OverlappedComponent_1
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OtherActor -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherActor_1
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OtherComp -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherComp_1
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OtherBodyIndex -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherBodyIndex_1
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).bFromSweep -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_bFromSweep
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).SweepResult -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_SweepResult
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_BP_Fire).execute

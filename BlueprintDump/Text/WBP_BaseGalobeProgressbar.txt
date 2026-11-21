@@ -1,0 +1,569 @@
+# WBP_BaseGalobeProgressbar
+class   : WidgetBlueprint
+parent  : AuraUserWidget
+parentPath: /Script/Aura.AuraUserWidget
+
+## 变量 (17)
+- SizeBox_Width : real
+- SizeBox_Height : real
+- SlateBrush_Background : struct  (/Script/CoreUObject.ScriptStruct'/Script/SlateCore.SlateBrush')
+- Globe_Background : struct  (/Script/CoreUObject.ScriptStruct'/Script/SlateCore.SlateBrush')
+- Globe_Padding : real
+- Glass_Brush : struct  (/Script/CoreUObject.ScriptStruct'/Script/SlateCore.SlateBrush')
+- GhostPercent : real
+- GhostDuration : real
+- GhostBrush : struct  (/Script/CoreUObject.ScriptStruct'/Script/SlateCore.SlateBrush')
+- GhostInterpSpeed : real
+- IsInitialized : bool
+- TargetPercent : real
+- SizeBox_Root : object  (/Script/CoreUObject.Class'/Script/UMG.SizeBox', category=默认)
+- ProgressBar_Globe : object  (/Script/CoreUObject.Class'/Script/UMG.ProgressBar', category=WBP_BaseGalobeProgressbar)
+- ProgressBar_Ghost : object  (/Script/CoreUObject.Class'/Script/UMG.ProgressBar', category=WBP_BaseGalobeProgressbar)
+- Image_Glass : object  (/Script/CoreUObject.Class'/Script/UMG.Image', category=WBP_BaseGalobeProgressbar)
+- Image_background : object  (/Script/CoreUObject.Class'/Script/UMG.Image', category=默认)
+
+## 图 EventGraph — 24 节点 / 24 连线
+
+[n0] Event PreConstruct (K2Node_Event) pos=(-272,16)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n1.execute
+    out IsDesignTime(bool)=false -> -
+
+[n1] SetBoxSize (K2Node_CallFunction) pos=(-48,32)
+    out then(exec) -> n2.execute
+
+[n2] SetBackGround (K2Node_CallFunction) pos=(256,16)
+    out then(exec) -> n3.execute
+
+[n3] SetGlobe (K2Node_CallFunction) pos=(528,0)
+    out then(exec) -> n4.execute
+
+[n4] SetGlobePadding (K2Node_CallFunction) pos=(816,16)
+    out then(exec) -> n5.execute
+
+[n5] SetGlass (K2Node_CallFunction) pos=(1136,16)
+    out then(exec) -> n10.execute
+
+[n6] GhostPercentSet (K2Node_CustomEvent) pos=(-288,304)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n8.execute
+    out Percent(real) -> -
+
+[n7] Set GhostPercent (K2Node_VariableSet) pos=(352,336)
+    out then(exec) -> -
+    out Output_Get(real)=0.0 -> -
+    in  GhostPercent(real)=0.0  [默认值]
+
+[n8] Delay (K2Node_CallFunction) pos=(32,256)
+    out then(exec) -> n7.execute
+    in  Duration(real)=0.2  [默认值]
+    in  LatentInfo(struct)=(Linkage=-1,UUID=-1,ExecutionFunction=\"  [默认值]
+
+[n9] Get GhostDuration (K2Node_VariableGet) pos=(-208,480)
+    out GhostDuration(real)=0.0 -> n8.Duration
+
+[n10] SetGhost (K2Node_CallFunction) pos=(1520,0)
+    out then(exec) -> -
+
+[n11] Event Tick (K2Node_Event) pos=(-288,640)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n17.execute
+    out MyGeometry(struct) -> -
+    out InDeltaTime(real)=0.0 -> n13.DeltaTime, n22.DeltaTime
+
+[n12] Get ProgressBar_Ghost (K2Node_VariableGet) pos=(-112,768)
+    out ProgressBar_Ghost(object) -> n14.self
+
+[n13] FInterpTo (K2Node_CallFunction) pos=(400,816)
+    out ReturnValue(real)=0.0 -> n17.percent
+    in  Current(real)=0.0  [默认值]
+    in  Target(real)=0.0  [默认值]
+    in  DeltaTime(real)=0.0  [默认值]
+    in  InterpSpeed(real)=0.0  [默认值]
+
+[n14] Get Percent (K2Node_VariableGet) pos=(96,768)
+    out Percent(real)=0.0 -> n13.Current
+
+[n15] Get GhostPercent (K2Node_VariableGet) pos=(16,864)
+    out GhostPercent(real)=0.0 -> n13.Target
+
+[n16] Get GhostInterpSpeed (K2Node_VariableGet) pos=(96,976)
+    out GhostInterpSpeed(real)=0.0 -> n13.InterpSpeed
+
+[n17] SetGhostPercent (K2Node_CallFunction) pos=(720,640)
+    out then(exec) -> n23.execute
+    in  percent(real)=0.0  [默认值]
+
+[n18] Get TargetPercent (K2Node_VariableGet) pos=(80,440)
+    out TargetPercent(real)=0.0 -> n7.GhostPercent
+
+[n19] Get ProgressBar_Globe (K2Node_VariableGet) pos=(704,1088)
+    out ProgressBar_Globe(object) -> n20.self, n23.self
+
+[n20] Get Percent (K2Node_VariableGet) pos=(960,896)
+    out Percent(real)=0.0 -> n22.Current
+
+[n21] Get TargetPercent (K2Node_VariableGet) pos=(960,1024)
+    out TargetPercent(real)=0.0 -> n22.Target
+
+[n22] FInterpTo (K2Node_CallFunction) pos=(1200,864)
+    out ReturnValue(real)=0.0 -> n23.InPercent
+    in  Current(real)=0.0  [默认值]
+    in  Target(real)=0.0  [默认值]
+    in  DeltaTime(real)=0.0  [默认值]
+    in  InterpSpeed(real)=6.0  [默认值]
+
+[n23] SetPercent (K2Node_CallFunction) pos=(1504,640)
+    out then(exec) -> -
+    in  InPercent(real)=0.0  [默认值]
+
+-- 连线 --
+n0(Event PreConstruct).then -> n1(SetBoxSize).execute
+n1(SetBoxSize).then -> n2(SetBackGround).execute
+n2(SetBackGround).then -> n3(SetGlobe).execute
+n3(SetGlobe).then -> n4(SetGlobePadding).execute
+n4(SetGlobePadding).then -> n5(SetGlass).execute
+n5(SetGlass).then -> n10(SetGhost).execute
+n6(GhostPercentSet).then -> n8(Delay).execute
+n8(Delay).then -> n7(Set GhostPercent).execute
+n18(Get TargetPercent).TargetPercent -> n7(Set GhostPercent).GhostPercent
+n9(Get GhostDuration).GhostDuration -> n8(Delay).Duration
+n11(Event Tick).then -> n17(SetGhostPercent).execute
+n11(Event Tick).InDeltaTime -> n13(FInterpTo).DeltaTime
+n11(Event Tick).InDeltaTime -> n22(FInterpTo).DeltaTime
+n12(Get ProgressBar_Ghost).ProgressBar_Ghost -> n14(Get Percent).self
+n14(Get Percent).Percent -> n13(FInterpTo).Current
+n15(Get GhostPercent).GhostPercent -> n13(FInterpTo).Target
+n16(Get GhostInterpSpeed).GhostInterpSpeed -> n13(FInterpTo).InterpSpeed
+n13(FInterpTo).ReturnValue -> n17(SetGhostPercent).percent
+n17(SetGhostPercent).then -> n23(SetPercent).execute
+n19(Get ProgressBar_Globe).ProgressBar_Globe -> n20(Get Percent).self
+n19(Get ProgressBar_Globe).ProgressBar_Globe -> n23(SetPercent).self
+n20(Get Percent).Percent -> n22(FInterpTo).Current
+n21(Get TargetPercent).TargetPercent -> n22(FInterpTo).Target
+n22(FInterpTo).ReturnValue -> n23(SetPercent).InPercent
+
+## 图 SetBackGround — 4 节点 / 3 连线
+
+[n0] Entry SetBackGround (K2Node_FunctionEntry) pos=(432,0)
+    out then(exec) -> n3.execute
+
+[n1] Get SlateBrush_Background (K2Node_VariableGet) pos=(656,176)
+    out SlateBrush_Background(struct) -> n3.InBrush
+
+[n2] Get Image_background (K2Node_VariableGet) pos=(640,112)
+    out Image_background(object) -> n3.self
+
+[n3] SetBrush (K2Node_CallFunction) pos=(864,16)
+    out then(exec) -> -
+
+-- 连线 --
+n0(Entry SetBackGround).then -> n3(SetBrush).execute
+n1(Get SlateBrush_Background).SlateBrush_Background -> n3(SetBrush).InBrush
+n2(Get Image_background).Image_background -> n3(SetBrush).self
+
+## 图 SetBoxSize — 7 节点 / 6 连线
+
+[n0] Entry SetBoxSize (K2Node_FunctionEntry) pos=(144,80)
+    out then(exec) -> n2.execute
+
+[n1] Get SizeBox_Root (K2Node_VariableGet) pos=(320,-16)
+    out SizeBox_Root(object) -> n2.self
+
+[n2] Set WidthOverride (K2Node_VariableSet) pos=(560,0)
+    out then(exec) -> n4.execute
+    out Output_Get(real)=0.0 -> -
+    in  WidthOverride(real)=0.0  [默认值]
+
+[n3] Get SizeBox_Width (K2Node_VariableGet) pos=(304,144)
+    out SizeBox_Width(real)=0.0 -> n2.WidthOverride
+
+[n4] Set HeightOverride (K2Node_VariableSet) pos=(960,-16)
+    out then(exec) -> -
+    out Output_Get(real)=0.0 -> -
+    in  HeightOverride(real)=0.0  [默认值]
+
+[n5] Get SizeBox_Height (K2Node_VariableGet) pos=(672,272)
+    out SizeBox_Height(real)=0.0 -> n4.HeightOverride
+
+[n6] Get SizeBox_Root (K2Node_VariableGet) pos=(800,96)
+    out SizeBox_Root(object) -> n4.self
+
+-- 连线 --
+n0(Entry SetBoxSize).then -> n2(Set WidthOverride).execute
+n1(Get SizeBox_Root).SizeBox_Root -> n2(Set WidthOverride).self
+n2(Set WidthOverride).then -> n4(Set HeightOverride).execute
+n3(Get SizeBox_Width).SizeBox_Width -> n2(Set WidthOverride).WidthOverride
+n5(Get SizeBox_Height).SizeBox_Height -> n4(Set HeightOverride).HeightOverride
+n6(Get SizeBox_Root).SizeBox_Root -> n4(Set HeightOverride).self
+
+## 图 SetGhost — 7 节点 / 6 连线
+
+[n0] Entry SetGhost (K2Node_FunctionEntry) pos=(-448,-64)
+    out then(exec) -> n1.execute
+
+[n1] Set WidgetStyle (K2Node_VariableSet) pos=(1104,-64)
+    out then(exec) -> -
+    out Output_Get(struct) -> -
+
+[n2] K2Node_MakeStruct (K2Node_MakeStruct) pos=(592,-96)
+    out ProgressBarStyle(struct) -> n1.WidgetStyle
+    in  BackgroundImage(struct)=(TintColor=(SpecifiedColor=(R=1.000000,G  [默认值]
+    in  FillImage(struct)=(TintColor=(SpecifiedColor=(R=1.000000,G  [默认值]
+    in  MarqueeImage(struct)=(TintColor=(SpecifiedColor=(R=1.000000,G  [默认值]
+    in  EnableFillAnimation(bool)=False  [默认值]
+
+[n3] K2Node_MakeStruct (K2Node_MakeStruct) pos=(160,-112)
+    out SlateBrush(struct) -> n2.BackgroundImage
+    in  TintColor(struct)=(SpecifiedColor=(R=1.000000,G=1.000000,B  [默认值]
+    in  DrawAs(byte)=Image  [默认值]
+    in  Tiling(byte)=NoTile  [默认值]
+    in  Mirroring(byte)=NoMirror  [默认值]
+    in  ImageSize(struct)=(X=32.000000,Y=32.000000)  [默认值]
+    in  Margin(struct)=(Left=0.000000,Top=0.000000,Right=0.0000  [默认值]
+    in  OutlineSettings(struct)=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.  [默认值]
+
+[n4] K2Node_MakeStruct (K2Node_MakeStruct) pos=(-256,-48)
+    out SlateColor(struct) -> n3.TintColor
+    in  SpecifiedColor(struct)=(R=1.000000,G=0.000000,B=1.000000,A=0.00  [默认值]
+    in  ColorUseRule(byte)=UseColor_Specified  [默认值]
+
+[n5] Get ProgressBar_Ghost (K2Node_VariableGet) pos=(688,256)
+    out ProgressBar_Ghost(object) -> n1.self
+
+[n6] Get GhostBrush (K2Node_VariableGet) pos=(288,336)
+    out GhostBrush(struct) -> n2.FillImage
+
+-- 连线 --
+n0(Entry SetGhost).then -> n1(Set WidgetStyle).execute
+n2(K2Node_MakeStruct).ProgressBarStyle -> n1(Set WidgetStyle).WidgetStyle
+n5(Get ProgressBar_Ghost).ProgressBar_Ghost -> n1(Set WidgetStyle).self
+n3(K2Node_MakeStruct).SlateBrush -> n2(K2Node_MakeStruct).BackgroundImage
+n6(Get GhostBrush).GhostBrush -> n2(K2Node_MakeStruct).FillImage
+n4(K2Node_MakeStruct).SlateColor -> n3(K2Node_MakeStruct).TintColor
+
+## 图 SetGhostPercent — 3 节点 / 3 连线
+
+[n0] Entry SetGhostPercent (K2Node_FunctionEntry) pos=(-48,-48)
+    out then(exec) -> n2.execute
+    out percent(real) -> n2.InPercent
+
+[n1] Get ProgressBar_Ghost (K2Node_VariableGet) pos=(192,128)
+    out ProgressBar_Ghost(object) -> n2.self
+
+[n2] SetPercent (K2Node_CallFunction) pos=(496,-32)
+    out then(exec) -> -
+    in  InPercent(real)=0.0  [默认值]
+
+-- 连线 --
+n0(Entry SetGhostPercent).then -> n2(SetPercent).execute
+n0(Entry SetGhostPercent).percent -> n2(SetPercent).InPercent
+n1(Get ProgressBar_Ghost).ProgressBar_Ghost -> n2(SetPercent).self
+
+## 图 SetGlass — 4 节点 / 3 连线
+
+[n0] Entry SetGlass (K2Node_FunctionEntry) pos=(528,320)
+    out then(exec) -> n2.execute
+
+[n1] Get Image_Glass (K2Node_VariableGet) pos=(704,304)
+    out Image_Glass(object) -> n2.self
+
+[n2] SetBrush (K2Node_CallFunction) pos=(1104,224)
+    out then(exec) -> -
+
+[n3] Get Glass_Brush (K2Node_VariableGet) pos=(688,432)
+    out Glass_Brush(struct) -> n2.InBrush
+
+-- 连线 --
+n0(Entry SetGlass).then -> n2(SetBrush).execute
+n1(Get Image_Glass).Image_Glass -> n2(SetBrush).self
+n3(Get Glass_Brush).Glass_Brush -> n2(SetBrush).InBrush
+
+## 图 SetGlobe — 7 节点 / 6 连线
+
+[n0] Entry SetGlobe (K2Node_FunctionEntry) pos=(-432,336)
+    out then(exec) -> n2.execute
+
+[n1] Get ProgressBar_Globe (K2Node_VariableGet) pos=(736,544)
+    out ProgressBar_Globe(object) -> n2.self
+
+[n2] Set WidgetStyle (K2Node_VariableSet) pos=(1088,224)
+    out then(exec) -> -
+    out Output_Get(struct) -> -
+
+[n3] K2Node_MakeStruct (K2Node_MakeStruct) pos=(576,192)
+    out ProgressBarStyle(struct) -> n2.WidgetStyle
+    in  BackgroundImage(struct)=(TintColor=(SpecifiedColor=(R=1.000000,G  [默认值]
+    in  FillImage(struct)=(TintColor=(SpecifiedColor=(R=1.000000,G  [默认值]
+    in  MarqueeImage(struct)=(TintColor=(SpecifiedColor=(R=1.000000,G  [默认值]
+    in  EnableFillAnimation(bool)=False  [默认值]
+
+[n4] K2Node_MakeStruct (K2Node_MakeStruct) pos=(144,176)
+    out SlateBrush(struct) -> n3.BackgroundImage
+    in  TintColor(struct)=(SpecifiedColor=(R=1.000000,G=1.000000,B  [默认值]
+    in  DrawAs(byte)=Image  [默认值]
+    in  Tiling(byte)=NoTile  [默认值]
+    in  Mirroring(byte)=NoMirror  [默认值]
+    in  ImageSize(struct)=(X=32.000000,Y=32.000000)  [默认值]
+    in  Margin(struct)=(Left=0.000000,Top=0.000000,Right=0.0000  [默认值]
+    in  OutlineSettings(struct)=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.  [默认值]
+
+[n5] K2Node_MakeStruct (K2Node_MakeStruct) pos=(-272,240)
+    out SlateColor(struct) -> n4.TintColor
+    in  SpecifiedColor(struct)=(R=1.000000,G=0.000000,B=1.000000,A=0.00  [默认值]
+    in  ColorUseRule(byte)=UseColor_Specified  [默认值]
+
+[n6] Get Globe_Background (K2Node_VariableGet) pos=(352,656)
+    out Globe_Background(struct) -> n3.FillImage
+
+-- 连线 --
+n0(Entry SetGlobe).then -> n2(Set WidgetStyle).execute
+n1(Get ProgressBar_Globe).ProgressBar_Globe -> n2(Set WidgetStyle).self
+n3(K2Node_MakeStruct).ProgressBarStyle -> n2(Set WidgetStyle).WidgetStyle
+n4(K2Node_MakeStruct).SlateBrush -> n3(K2Node_MakeStruct).BackgroundImage
+n6(Get Globe_Background).Globe_Background -> n3(K2Node_MakeStruct).FillImage
+n5(K2Node_MakeStruct).SlateColor -> n4(K2Node_MakeStruct).TintColor
+
+## 图 SetGlobePadding — 6 节点 / 8 连线
+
+[n0] Entry SetGlobePadding (K2Node_FunctionEntry) pos=(-128,384)
+    out then(exec) -> n3.execute
+
+[n1] Get ProgressBar_Globe (K2Node_VariableGet) pos=(32,336)
+    out ProgressBar_Globe(object) -> n2.Widget
+
+[n2] SlotAsOverlaySlot (K2Node_CallFunction) pos=(304,352)
+    out ReturnValue(object) -> n3.self
+
+[n3] SetPadding (K2Node_CallFunction) pos=(864,176)
+    out then(exec) -> -
+
+[n4] K2Node_MakeStruct (K2Node_MakeStruct) pos=(336,512)
+    out Margin(struct) -> n3.InPadding
+    in  Left(real)=0.000000  [默认值]
+    in  Top(real)=0.000000  [默认值]
+    in  Right(real)=0.000000  [默认值]
+    in  Bottom(real)=0.000000  [默认值]
+
+[n5] Get Globe_Padding (K2Node_VariableGet) pos=(48,560)
+    out Globe_Padding(real)=0.0 -> n4.Left, n4.Top, n4.Right, n4.Bottom
+
+-- 连线 --
+n0(Entry SetGlobePadding).then -> n3(SetPadding).execute
+n1(Get ProgressBar_Globe).ProgressBar_Globe -> n2(SlotAsOverlaySlot).Widget
+n2(SlotAsOverlaySlot).ReturnValue -> n3(SetPadding).self
+n4(K2Node_MakeStruct).Margin -> n3(SetPadding).InPadding
+n5(Get Globe_Padding).Globe_Padding -> n4(K2Node_MakeStruct).Left
+n5(Get Globe_Padding).Globe_Padding -> n4(K2Node_MakeStruct).Top
+n5(Get Globe_Padding).Globe_Padding -> n4(K2Node_MakeStruct).Right
+n5(Get Globe_Padding).Globe_Padding -> n4(K2Node_MakeStruct).Bottom
+
+## 图 SetProgressPercent — 25 节点 / 37 连线
+
+[n0] EdGraphNode_Comment (EdGraphNode_Comment) pos=(-176,64)
+    comment: 初始化使真血条和虚条一样
+
+[n1] Entry SetProgressPercent (K2Node_FunctionEntry) pos=(-224,-80)
+    out then(exec) -> n6.execute
+    out Percent(real) -> n3.InPercent, n4.Percent, n9.InPercent, n11.InPercent, n12.GhostPercent, n13.A, n15.TargetPercent, n17.A, n18.A, n21.TargetPercent, n24.TargetPercent, n22.GhostPercent, n23.percent
+
+[n2] Get ProgressBar_Globe (K2Node_VariableGet) pos=(288,-144)
+    out ProgressBar_Globe(object) -> n3.self
+
+[n3] SetPercent (K2Node_CallFunction) pos=(512,-96)
+    out then(exec) -> n4.execute
+    in  InPercent(real)=0.0  [默认值]
+
+[n4] GhostPercentSet (K2Node_CallFunction) pos=(816,-64)
+    out then(exec) -> -
+    in  Percent(real)=0.0  [默认值]
+
+[n5] Set IsInitialized (K2Node_VariableSet) pos=(368,128)
+    out then(exec) -> n9.execute
+    out Output_Get(bool)=false -> -
+    in  IsInitialized(bool)=true  [默认值]
+
+[n6] K2Node_IfThenElse (K2Node_IfThenElse) pos=(48,-160)
+    out then(exec) -> n19.execute
+    out else(exec) -> n14.execute
+    in  Condition(bool)=true  [默认值]
+
+[n7] Get IsInitialized (K2Node_VariableGet) pos=(-128,-192)
+    out IsInitialized(bool)=false -> n6.Condition
+
+[n8] Get ProgressBar_Globe (K2Node_VariableGet) pos=(384,416)
+    out ProgressBar_Globe(object) -> n9.self
+
+[n9] SetPercent (K2Node_CallFunction) pos=(672,160)
+    out then(exec) -> n11.execute
+    in  InPercent(real)=0.0  [默认值]
+
+[n10] Get ProgressBar_Ghost (K2Node_VariableGet) pos=(720,416)
+    out ProgressBar_Ghost(object) -> n11.self
+
+[n11] SetPercent (K2Node_CallFunction) pos=(944,160)
+    out then(exec) -> n12.execute
+    in  InPercent(real)=0.0  [默认值]
+
+[n12] Set GhostPercent (K2Node_VariableSet) pos=(1184,192)
+    out then(exec) -> n15.execute
+    out Output_Get(real)=0.0 -> -
+    in  GhostPercent(real)=0.0  [默认值]
+
+[n13] Greater_DoubleDouble (K2Node_PromotableOperator) pos=(-112,224)
+    out ReturnValue(bool) -> n14.Condition
+
+[n14] K2Node_IfThenElse (K2Node_IfThenElse) pos=(80,160)
+    out then(exec) -> n5.execute
+    out else(exec) -> -
+    in  Condition(bool)=true  [默认值]
+
+[n15] Set TargetPercent (K2Node_VariableSet) pos=(1488,192)
+    out then(exec) -> -
+    out Output_Get(real)=0.0 -> -
+    in  TargetPercent(real)=0.0  [默认值]
+
+[n16] Get TargetPercent (K2Node_VariableGet) pos=(-144,-448)
+    out TargetPercent(real)=0.0 -> n17.B, n18.B
+
+[n17] Greater_DoubleDouble (K2Node_CallFunction) pos=(80,-480)
+    out ReturnValue(bool)=false -> n19.Condition
+    in  A(real)=0.0  [默认值]
+    in  B(real)=0.0  [默认值]
+
+[n18] Less_DoubleDouble (K2Node_CallFunction) pos=(336,-432)
+    out ReturnValue(bool)=false -> n20.Condition
+    in  A(real)=0.0  [默认值]
+    in  B(real)=0.0  [默认值]
+
+[n19] K2Node_IfThenElse (K2Node_IfThenElse) pos=(80,-656)
+    out then(exec) -> n21.execute
+    out else(exec) -> n20.execute
+    in  Condition(bool)=true  [默认值]
+
+[n20] K2Node_IfThenElse (K2Node_IfThenElse) pos=(400,-272)
+    out then(exec) -> n24.execute
+    out else(exec) -> -
+    in  Condition(bool)=true  [默认值]
+
+[n21] Set TargetPercent (K2Node_VariableSet) pos=(432,-656)
+    out then(exec) -> n22.execute
+    out Output_Get(real)=0.0 -> -
+    in  TargetPercent(real)=0.0  [默认值]
+
+[n22] Set GhostPercent (K2Node_VariableSet) pos=(704,-656)
+    out then(exec) -> n23.execute
+    out Output_Get(real)=0.0 -> -
+    in  GhostPercent(real)=0.0  [默认值]
+
+[n23] SetGhostPercent (K2Node_CallFunction) pos=(976,-656)
+    out then(exec) -> -
+    in  percent(real)=0.0  [默认值]
+
+[n24] Set TargetPercent (K2Node_VariableSet) pos=(656,-272)
+    out then(exec) -> n3.execute
+    out Output_Get(real)=0.0 -> -
+    in  TargetPercent(real)=0.0  [默认值]
+
+-- 连线 --
+n1(Entry SetProgressPercent).then -> n6(K2Node_IfThenElse).execute
+n1(Entry SetProgressPercent).Percent -> n3(SetPercent).InPercent
+n1(Entry SetProgressPercent).Percent -> n4(GhostPercentSet).Percent
+n1(Entry SetProgressPercent).Percent -> n9(SetPercent).InPercent
+n1(Entry SetProgressPercent).Percent -> n11(SetPercent).InPercent
+n1(Entry SetProgressPercent).Percent -> n12(Set GhostPercent).GhostPercent
+n1(Entry SetProgressPercent).Percent -> n13(Greater_DoubleDouble).A
+n1(Entry SetProgressPercent).Percent -> n15(Set TargetPercent).TargetPercent
+n1(Entry SetProgressPercent).Percent -> n17(Greater_DoubleDouble).A
+n1(Entry SetProgressPercent).Percent -> n18(Less_DoubleDouble).A
+n1(Entry SetProgressPercent).Percent -> n21(Set TargetPercent).TargetPercent
+n1(Entry SetProgressPercent).Percent -> n24(Set TargetPercent).TargetPercent
+n1(Entry SetProgressPercent).Percent -> n22(Set GhostPercent).GhostPercent
+n1(Entry SetProgressPercent).Percent -> n23(SetGhostPercent).percent
+n2(Get ProgressBar_Globe).ProgressBar_Globe -> n3(SetPercent).self
+n24(Set TargetPercent).then -> n3(SetPercent).execute
+n3(SetPercent).then -> n4(GhostPercentSet).execute
+n14(K2Node_IfThenElse).then -> n5(Set IsInitialized).execute
+n5(Set IsInitialized).then -> n9(SetPercent).execute
+n7(Get IsInitialized).IsInitialized -> n6(K2Node_IfThenElse).Condition
+n6(K2Node_IfThenElse).then -> n19(K2Node_IfThenElse).execute
+n6(K2Node_IfThenElse).else -> n14(K2Node_IfThenElse).execute
+n8(Get ProgressBar_Globe).ProgressBar_Globe -> n9(SetPercent).self
+n9(SetPercent).then -> n11(SetPercent).execute
+n10(Get ProgressBar_Ghost).ProgressBar_Ghost -> n11(SetPercent).self
+n11(SetPercent).then -> n12(Set GhostPercent).execute
+n12(Set GhostPercent).then -> n15(Set TargetPercent).execute
+n13(Greater_DoubleDouble).ReturnValue -> n14(K2Node_IfThenElse).Condition
+n16(Get TargetPercent).TargetPercent -> n17(Greater_DoubleDouble).B
+n16(Get TargetPercent).TargetPercent -> n18(Less_DoubleDouble).B
+n17(Greater_DoubleDouble).ReturnValue -> n19(K2Node_IfThenElse).Condition
+n18(Less_DoubleDouble).ReturnValue -> n20(K2Node_IfThenElse).Condition
+n19(K2Node_IfThenElse).then -> n21(Set TargetPercent).execute
+n19(K2Node_IfThenElse).else -> n20(K2Node_IfThenElse).execute
+n20(K2Node_IfThenElse).then -> n24(Set TargetPercent).execute
+n21(Set TargetPercent).then -> n22(Set GhostPercent).execute
+n22(Set GhostPercent).then -> n23(SetGhostPercent).execute
+
+## 图 Tick — 3 节点 / 4 连线
+
+[n0] Entry Tick (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out MyGeometry(struct) -> n1.K2Node_Event_MyGeometry
+    out InDeltaTime(real)=0.0 -> n1.K2Node_Event_InDeltaTime
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-1520,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_BaseGalobeProgressbar (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry Tick).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry Tick).MyGeometry -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_MyGeometry
+n0(Entry Tick).InDeltaTime -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_InDeltaTime
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_BaseGalobeProgressbar).execute
+
+## 图 GhostPercentSet — 3 节点 / 3 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out Percent(real) -> n1.K2Node_CustomEvent_Percent
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-800,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_BaseGalobeProgressbar (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ).Percent -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_CustomEvent_Percent
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_BaseGalobeProgressbar).execute
+
+## 图 PreConstruct — 3 节点 / 3 连线
+
+[n0] Entry PreConstruct (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out IsDesignTime(bool)=false -> n1.K2Node_Event_IsDesignTime
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-80,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_BaseGalobeProgressbar (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry PreConstruct).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry PreConstruct).IsDesignTime -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_IsDesignTime
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_BaseGalobeProgressbar).execute
+
+## 控件树 / Designer 设置
+- SizeBox_Root (SizeBox)
+  - Overlay_34 (Overlay)  slot=SizeBoxSlot
+    - ProgressBar_Ghost (ProgressBar)  slot=OverlaySlot  Percent=0.405868
+    - Image_background (Image)  slot=OverlaySlot
+    - ProgressBar_Globe (ProgressBar)  slot=OverlaySlot  Percent=0.548266
+    - Image_Glass (Image)  slot=OverlaySlot

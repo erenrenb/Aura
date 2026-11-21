@@ -1,0 +1,95 @@
+# BP_Ghoul
+class   : Blueprint
+parent  : Character
+parentPath: /Script/Engine.Character
+
+## 组件 (4)
+- CollisionCylinder (CapsuleComponent)  profile=Pawn  collision=<CollisionEnabled.QUERY_AND_PHYSICS: 3>  overlapEvents=True
+- Arrow (ArrowComponent)  profile=NoCollision  collision=<CollisionEnabled.NO_COLLISION: 0>  overlapEvents=False
+- CharMoveComp (CharacterMovementComponent)
+- CharacterMesh0 (SkeletalMeshComponent)  profile=CharacterMesh  collision=<CollisionEnabled.QUERY_ONLY: 1>  overlapEvents=False
+
+## 图 EventGraph — 10 节点 / 8 连线
+
+[n0] Event BeginPlay (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: This node is disabled and will not be called. / Drag off pins to build functionality.
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n1] Event ActorBeginOverlap (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: This node is disabled and will not be called. / Drag off pins to build functionality.
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out OtherActor(object) -> -
+
+[n2] Event Tick (K2Node_Event) pos=(0,416)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n3.execute
+    out DeltaSeconds(real)=0.0 -> n5.A, n8.A
+
+[n3] K2_AddActorWorldOffset (K2Node_CallFunction) pos=(384,400)
+    out then(exec) -> n7.execute
+    out SweepHitResult(struct) -> -
+    in  DeltaLocation(struct)=0, 0, 0  [默认值]
+    in  bSweep(bool)=false  [默认值]
+    in  bTeleport(bool)=false  [默认值]
+
+[n4] GetActorForwardVector (K2Node_CallFunction) pos=(-32,704)
+    out ReturnValue(struct)=0, 0, 0 -> n6.A
+
+[n5] Multiply_DoubleDouble (K2Node_PromotableOperator) pos=(32,640)
+    out ReturnValue(real) -> n6.B
+    in  B(real)=85.000000  [默认值]
+
+[n6] Multiply_VectorVector (K2Node_PromotableOperator) pos=(288,736)
+    out ReturnValue(struct) -> n3.DeltaLocation
+
+[n7] K2_AddActorLocalRotation (K2Node_CallFunction) pos=(800,432)
+    out then(exec) -> -
+    out SweepHitResult(struct) -> -
+    in  DeltaRotation(struct)=0, 0, 0  [默认值]
+    in  DeltaRotation_Roll(real)=0.0  [默认值]
+    in  DeltaRotation_Pitch(real)=0.0  [默认值]
+    in  DeltaRotation_Yaw(real)=0.0  [默认值]
+    in  bSweep(bool)=false  [默认值]
+    in  bTeleport(bool)=false  [默认值]
+
+[n8] Multiply_DoubleDouble (K2Node_PromotableOperator) pos=(640,656)
+    out ReturnValue(real) -> n7.DeltaRotation_Yaw
+    in  B(real)=12.000000  [默认值]
+
+[n9] MakeRotator (K2Node_CallFunction) pos=(790,432)
+    out ReturnValue(struct)=0, 0, 0 -> -
+
+-- 连线 --
+n2(Event Tick).then -> n3(K2_AddActorWorldOffset).execute
+n2(Event Tick).DeltaSeconds -> n5(Multiply_DoubleDouble).A
+n2(Event Tick).DeltaSeconds -> n8(Multiply_DoubleDouble).A
+n3(K2_AddActorWorldOffset).then -> n7(K2_AddActorLocalRotation).execute
+n6(Multiply_VectorVector).ReturnValue -> n3(K2_AddActorWorldOffset).DeltaLocation
+n4(GetActorForwardVector).ReturnValue -> n6(Multiply_VectorVector).A
+n5(Multiply_DoubleDouble).ReturnValue -> n6(Multiply_VectorVector).B
+n8(Multiply_DoubleDouble).ReturnValue -> n7(K2_AddActorLocalRotation).DeltaRotation_Yaw
+
+## 图 UserConstructionScript — 1 节点 / 0 连线
+
+[n0] Entry UserConstructionScript (K2Node_FunctionEntry) pos=(0,0)
+    out then(exec) -> -
+
+## 图 ReceiveTick — 3 节点 / 3 连线
+
+[n0] Entry ReceiveTick (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out DeltaSeconds(real)=0.0 -> n1.K2Node_Event_DeltaSeconds
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-1280,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_BP_Ghoul (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ReceiveTick).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ReceiveTick).DeltaSeconds -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_DeltaSeconds
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_BP_Ghoul).execute

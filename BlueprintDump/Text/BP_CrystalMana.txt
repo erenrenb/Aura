@@ -1,0 +1,88 @@
+# BP_CrystalMana
+class   : Blueprint
+parent  : AuraEffectActor
+parentPath: /Script/Aura.AuraEffectActor
+
+## 组件 (1)
+- RootSceneComponent (SceneComponent)
+- ⚠ 只有根组件，没有碰撞/网格组件：不会触发任何 Overlap 事件
+
+## 类默认值
+- DurationGameplayEffectClass = <Object '/Game/BluePrint/Character/Actor/Crystal/GE_CrystalMana.GE_CrystalMana_C' Class 'BlueprintGeneratedClass'>
+
+## 图 EventGraph — 7 节点 / 4 连线
+
+[n0] Event BeginPlay (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n1] Event ActorBeginOverlap (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out OtherActor(object) -> -
+
+[n2] Event Tick (K2Node_Event) pos=(0,416) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out DeltaSeconds(real)=0.0 -> -
+
+[n3] Event ComponentBeginOverlapSignature__DelegateSignature (K2Node_ComponentBoundEvent) pos=(400,64)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n4.execute
+    out OverlappedComponent(object) -> -
+    out OtherActor(object) -> n4.TargetActor
+    out OtherComp(object) -> -
+    out OtherBodyIndex(int)=0 -> -
+    out bFromSweep(bool)=false -> -
+    out SweepResult(struct) -> -
+
+[n4] ApplyEffectToTarget (K2Node_CallFunction) pos=(928,96)
+    out then(exec) -> n6.execute
+
+[n5] Get DurationGameplayEffectClass (K2Node_VariableGet) pos=(752,352)
+    out DurationGameplayEffectClass(class) -> n4.GameplayEffectClass
+
+[n6] K2_DestroyActor (K2Node_CallFunction) pos=(1248,144)
+    out then(exec) -> -
+
+-- 连线 --
+n3(Event ComponentBeginOverlapSignature__DelegateSignature).then -> n4(ApplyEffectToTarget).execute
+n3(Event ComponentBeginOverlapSignature__DelegateSignature).OtherActor -> n4(ApplyEffectToTarget).TargetActor
+n4(ApplyEffectToTarget).then -> n6(K2_DestroyActor).execute
+n5(Get DurationGameplayEffectClass).DurationGameplayEffectClass -> n4(ApplyEffectToTarget).GameplayEffectClass
+
+## 图 UserConstructionScript — 1 节点 / 0 连线
+
+[n0] Entry UserConstructionScript (K2Node_FunctionEntry) pos=(0,0)
+    out then(exec) -> -
+
+## 图 BndEvt__BP_CrystalMana_Sphere_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature — 3 节点 / 8 连线
+
+[n0] Entry ComponentBeginOverlapSignature__DelegateSignature (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out OverlappedComponent(object) -> n1.K2Node_ComponentBoundEvent_OverlappedComponent
+    out OtherActor(object) -> n1.K2Node_ComponentBoundEvent_OtherActor
+    out OtherComp(object) -> n1.K2Node_ComponentBoundEvent_OtherComp
+    out OtherBodyIndex(int)=0 -> n1.K2Node_ComponentBoundEvent_OtherBodyIndex
+    out bFromSweep(bool)=false -> n1.K2Node_ComponentBoundEvent_bFromSweep
+    out SweepResult(struct) -> n1.K2Node_ComponentBoundEvent_SweepResult
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-1520,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_BP_CrystalMana (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OverlappedComponent -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OverlappedComponent
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OtherActor -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherActor
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OtherComp -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherComp
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).OtherBodyIndex -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_OtherBodyIndex
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).bFromSweep -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_bFromSweep
+n0(Entry ComponentBeginOverlapSignature__DelegateSignature).SweepResult -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_ComponentBoundEvent_SweepResult
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_BP_CrystalMana).execute

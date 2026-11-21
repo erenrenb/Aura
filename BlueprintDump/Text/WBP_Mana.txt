@@ -1,0 +1,206 @@
+# WBP_Mana
+class   : WidgetBlueprint
+parent  : WBP_BaseGalobeProgressbar_C
+parentPath: /Game/BluePrint/Character/UI/Progressbar/WBP_BaseGalobeProgressbar.WBP_BaseGalobeProgressbar_C
+
+## 变量 (2)
+- Mana : real
+- MaxMana : real
+
+## 图 EventGraph — 24 节点 / 25 连线
+
+[n0] EdGraphNode_Comment (EdGraphNode_Comment) pos=(640,416)
+    comment: ChangeMana
+
+[n1] EdGraphNode_Comment (EdGraphNode_Comment) pos=(672,960)
+    comment: ChangeMaxMana
+
+[n2] Event PreConstruct (K2Node_Event) pos=(0,-16) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n3.execute
+    out IsDesignTime(bool)=false -> n3.IsDesignTime
+
+[n3] PreConstruct (K2Node_CallParentFunction) pos=(200,-16) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out then(exec) -> -
+    in  IsDesignTime(bool)=false  [默认值]
+
+[n4] Event Construct (K2Node_Event) pos=(0,192) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n5] Event WidgetControllerSet (K2Node_Event) pos=(240,128)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n6.execute
+
+[n6] Cast to BP_OverlayWidgetController_C (K2Node_DynamicCast) pos=(592,144)
+    out then(exec) -> n8.execute
+    out CastFailed(exec) -> -
+    out AsBP Overlay Widget Controller(object) -> n8.self, n10.self
+    out bSuccess(bool) -> -
+
+[n7] OnManaChanged_事件 (K2Node_CustomEvent) pos=(704,480)
+    out OutputDelegate(delegate) -> n8.Delegate
+    out then(exec) -> n11.execute
+    out NewValue(real) -> n11.Mana
+
+[n8] Bind OnManaChanged (K2Node_AssignDelegate) pos=(992,112)
+    out then(exec) -> n10.execute
+
+[n9] OnMaxManaChanged_事件 (K2Node_CustomEvent) pos=(736,1024)
+    out OutputDelegate(delegate) -> n10.Delegate
+    out then(exec) -> n20.execute
+    out NewValue(real) -> n20.MaxMana
+
+[n10] Bind OnMaxManaChanged (K2Node_AssignDelegate) pos=(1472,144)
+    out then(exec) -> -
+
+[n11] Set Mana (K2Node_VariableSet) pos=(1008,560)
+    out then(exec) -> n12.execute
+    out Output_Get(real)=0.0 -> -
+    in  Mana(real)=0.0  [默认值]
+
+[n12] SetProgressPercent (K2Node_CallFunction) pos=(1280,608)
+    out then(exec) -> -
+    in  Percent(real)=0.0  [默认值]
+
+[n13] Get Mana (K2Node_VariableGet) pos=(800,688)
+    out Mana(real)=0.0 -> n15.A
+
+[n14] Get MaxMana (K2Node_VariableGet) pos=(800,768)
+    out MaxMana(real)=0.0 -> n15.B
+
+[n15] SafeDivide (K2Node_CallFunction) pos=(976,704)
+    out ReturnValue(real)=0.0 -> n12.Percent
+    in  A(real)=0.0  [默认值]
+    in  B(real)=0.0  [默认值]
+
+[n16] SetProgressPercent (K2Node_CallFunction) pos=(1392,1184)
+    out then(exec) -> -
+    in  Percent(real)=0.0  [默认值]
+
+[n17] Get Mana (K2Node_VariableGet) pos=(800,1280)
+    out Mana(real)=0.0 -> n19.A
+
+[n18] Get MaxMana (K2Node_VariableGet) pos=(800,1360)
+    out MaxMana(real)=0.0 -> n19.B
+
+[n19] SafeDivide (K2Node_CallFunction) pos=(976,1296)
+    out ReturnValue(real)=0.0 -> n16.Percent
+    in  A(real)=0.0  [默认值]
+    in  B(real)=0.0  [默认值]
+
+[n20] Set MaxMana (K2Node_VariableSet) pos=(1056,1136)
+    out then(exec) -> n16.execute
+    out Output_Get(real)=0.0 -> -
+    in  MaxMana(real)=0.0  [默认值]
+
+[n21] Get WidgetController (K2Node_VariableGet) pos=(368,320)
+    out WidgetController(object) -> n6.Object
+
+[n22] Event Tick (K2Node_Event) pos=(676,1594)
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> n23.execute
+    out MyGeometry(struct) -> n23.MyGeometry
+    out InDeltaTime(real)=0.0 -> n23.InDeltaTime
+
+[n23] Tick (K2Node_CallParentFunction) pos=(928,1584)
+    out then(exec) -> -
+    in  InDeltaTime(real)=0.0  [默认值]
+
+-- 连线 --
+n2(Event PreConstruct).then -> n3(PreConstruct).execute
+n2(Event PreConstruct).IsDesignTime -> n3(PreConstruct).IsDesignTime
+n5(Event WidgetControllerSet).then -> n6(Cast to BP_OverlayWidgetController_C).execute
+n6(Cast to BP_OverlayWidgetController_C).then -> n8(Bind OnManaChanged).execute
+n21(Get WidgetController).WidgetController -> n6(Cast to BP_OverlayWidgetController_C).Object
+n6(Cast to BP_OverlayWidgetController_C).AsBP Overlay Widget Controller -> n8(Bind OnManaChanged).self
+n6(Cast to BP_OverlayWidgetController_C).AsBP Overlay Widget Controller -> n10(Bind OnMaxManaChanged).self
+n7(OnManaChanged_事件).OutputDelegate -> n8(Bind OnManaChanged).Delegate
+n7(OnManaChanged_事件).then -> n11(Set Mana).execute
+n7(OnManaChanged_事件).NewValue -> n11(Set Mana).Mana
+n8(Bind OnManaChanged).then -> n10(Bind OnMaxManaChanged).execute
+n9(OnMaxManaChanged_事件).OutputDelegate -> n10(Bind OnMaxManaChanged).Delegate
+n9(OnMaxManaChanged_事件).then -> n20(Set MaxMana).execute
+n9(OnMaxManaChanged_事件).NewValue -> n20(Set MaxMana).MaxMana
+n11(Set Mana).then -> n12(SetProgressPercent).execute
+n15(SafeDivide).ReturnValue -> n12(SetProgressPercent).Percent
+n13(Get Mana).Mana -> n15(SafeDivide).A
+n14(Get MaxMana).MaxMana -> n15(SafeDivide).B
+n20(Set MaxMana).then -> n16(SetProgressPercent).execute
+n19(SafeDivide).ReturnValue -> n16(SetProgressPercent).Percent
+n17(Get Mana).Mana -> n19(SafeDivide).A
+n18(Get MaxMana).MaxMana -> n19(SafeDivide).B
+n22(Event Tick).then -> n23(Tick).execute
+n22(Event Tick).MyGeometry -> n23(Tick).MyGeometry
+n22(Event Tick).InDeltaTime -> n23(Tick).InDeltaTime
+
+## 图 Tick — 3 节点 / 4 连线
+
+[n0] Entry Tick (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out MyGeometry(struct) -> n1.K2Node_Event_MyGeometry
+    out InDeltaTime(real)=0.0 -> n1.K2Node_Event_InDeltaTime
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(-560,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_Mana (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry Tick).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry Tick).MyGeometry -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_MyGeometry
+n0(Entry Tick).InDeltaTime -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_Event_InDeltaTime
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_Mana).execute
+
+## 图 WidgetControllerSet — 2 节点 / 1 连线
+
+[n0] Entry WidgetControllerSet (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+
+[n1] ExecuteUbergraph_WBP_Mana (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry WidgetControllerSet).then -> n1(ExecuteUbergraph_WBP_Mana).execute
+
+## 图 OnMaxManaChanged_事件 — 3 节点 / 3 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out NewValue(real) -> n1.K2Node_CustomEvent_NewValue
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(640,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_Mana (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ).NewValue -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_CustomEvent_NewValue
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_Mana).execute
+
+## 图 OnManaChanged_事件 — 3 节点 / 3 连线
+
+[n0] Entry  (K2Node_FunctionEntry) pos=(-200,-2000)
+    out then(exec) -> n1.execute
+    out NewValue(real) -> n1.K2Node_CustomEvent_NewValue_1
+
+[n1] K2Node_SetVariableOnPersistentFrame (K2Node_SetVariableOnPersistentFrame) pos=(1360,-2000)
+    out then(exec) -> n2.execute
+
+[n2] ExecuteUbergraph_WBP_Mana (K2Node_CallFunction) pos=(300,-2000)
+    out then(exec) -> -
+    in  EntryPoint(int)=0  [默认值]
+
+-- 连线 --
+n0(Entry ).then -> n1(K2Node_SetVariableOnPersistentFrame).execute
+n0(Entry ).NewValue -> n1(K2Node_SetVariableOnPersistentFrame).K2Node_CustomEvent_NewValue_1
+n1(K2Node_SetVariableOnPersistentFrame).then -> n2(ExecuteUbergraph_WBP_Mana).execute

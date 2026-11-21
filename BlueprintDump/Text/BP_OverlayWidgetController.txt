@@ -1,0 +1,16 @@
+# BP_OverlayWidgetController
+class   : Blueprint
+parent  : OverlayWidgetController
+parentPath: /Script/Aura.OverlayWidgetController
+
+## 属性
+UbergraphPages = "/Script/Engine.EdGraph'EventGraph'"
+bLegacyNeedToPurgeSkelRefs = False
+
+## 子对象 (1)
+- 汇总: EdGraph×1
+
+- EventGraph (EdGraph)  ← BP_OverlayWidgetController
+    Schema = "/Script/CoreUObject.Class'/Script/BlueprintGraph.EdGraphSchema_K2'"
+    bAllowDeletion = False
+    GraphGuid = BC514D5347C30B662C87C8970A1650A4

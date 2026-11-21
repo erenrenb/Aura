@@ -1,0 +1,35 @@
+# BP_AuraCharacter
+class   : Blueprint
+parent  : AuraCharacter
+parentPath: /Script/Aura.AuraCharacter
+
+## 组件 (5)
+- CollisionCylinder (CapsuleComponent)  profile=Pawn  collision=<CollisionEnabled.QUERY_AND_PHYSICS: 3>  overlapEvents=True
+- Arrow (ArrowComponent)  profile=NoCollision  collision=<CollisionEnabled.NO_COLLISION: 0>  overlapEvents=False
+- CharMoveComp (CharacterMovementComponent)
+- CharacterMesh0 (SkeletalMeshComponent)  profile=CharacterMesh  collision=<CollisionEnabled.QUERY_ONLY: 1>  overlapEvents=False
+- Weapon (SkeletalMeshComponent)  profile=NoCollision  collision=<CollisionEnabled.NO_COLLISION: 0>  overlapEvents=False
+
+## 图 EventGraph — 3 节点 / 0 连线
+
+[n0] Event BeginPlay (K2Node_Event) pos=(0,0) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+
+[n1] Event ActorBeginOverlap (K2Node_Event) pos=(0,208) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out OtherActor(object) -> -
+
+[n2] Event Tick (K2Node_Event) pos=(0,416) [DISABLED]
+    comment: 此节点被禁用，将不会被调用。 / 从引脚连出引线来编译功能。
+    out OutputDelegate(delegate) -> -
+    out then(exec) -> -
+    out DeltaSeconds(real)=0.0 -> -
+
+## 图 UserConstructionScript — 1 节点 / 0 连线
+
+[n0] Entry UserConstructionScript (K2Node_FunctionEntry) pos=(0,0)
+    out then(exec) -> -
